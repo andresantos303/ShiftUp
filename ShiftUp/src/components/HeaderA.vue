@@ -26,7 +26,7 @@
           <span class="dot"></span>
           <img src="@/assets/notification-icon.png" alt="Notification Icon" />
         </div>
-        <RouterLink :to="`/profile/${id}`" class="icon profile" tag="div">
+        <RouterLink :to="`/participante/${id}/profile`" class="icon profile" tag="div">
           <img src="@/assets/profile-icon.png" alt="Profile Icon" />
         </RouterLink>
       </div>
