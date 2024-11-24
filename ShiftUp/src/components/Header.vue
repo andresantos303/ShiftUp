@@ -1,27 +1,27 @@
 <template>
   <header class="header">
     <div class="logo">
-      <img alt="Logo" class="icon" src="@/assets/logo.png"/>
+      <img alt="ShiftUp Logo" class="icon" src="@/assets/logo.png"/>
     </div>
     <nav class="navigation">
       <ul>
         <li>
-          <a><RouterLink to="/">Home</RouterLink></a>
+          <RouterLink to="/">Home</RouterLink>
         </li>
         <li>
-          <a><RouterLink to="/speakers">Speakers</RouterLink></a>
+          <RouterLink to="/speakers">Speakers</RouterLink>
         </li>
         <li>
-          <a><RouterLink to="/schedule">Schedule</RouterLink></a>
+          <RouterLink to="/schedule">Schedule</RouterLink>
         </li>
         <li>
-          <a><RouterLink to="/ticket">Tickets</RouterLink></a>
+          <RouterLink to="/tickets">Tickets</RouterLink>
         </li>
       </ul>
     </nav>
     <div class="actions">
-      <button class="login-btn">Login</button>
-      <button class="buy-ticket-btn">Buy ticket</button>
+      <RouterLink to="/login" class="login-btn" tag="button">Login</RouterLink>
+      <RouterLink to="/tickets" class="buy-ticket-btn" tag="button">Buy ticket</RouterLink>
     </div>
   </header>
 </template>
@@ -39,7 +39,6 @@
 .logo {
   display: flex;
   align-items: center;
-  font-size: 1.2rem;
 }
 
 .navigation ul {

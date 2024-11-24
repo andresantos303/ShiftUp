@@ -6,7 +6,7 @@
           Join Portugal's leading tech conference and transform your vision of the
           digital future.
         </p>
-        <button class="cta-btn">Secure my place</button>
+        <RouterLink to="/tickets" class="cta-btn" tag="button">Secure my place</RouterLink>
       </div>
       <div class="hero-bg"></div>
     </section>
