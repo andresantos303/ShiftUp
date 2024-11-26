@@ -1,9 +1,16 @@
 <script>
 import HeaderP from "../../components/HeaderP.vue";
+import router from '@/router';
 
 export default {
   components: {
     HeaderP,
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("isAuthenticated")
+      router.push("home")
+    }
   },
 };
 </script>
@@ -12,7 +19,7 @@ export default {
   <HeaderP/>
   <div>
     <h1>This is an Profile page</h1>
-    <RouterLink to="/" tag="button">Log Out</RouterLink>
+    <button @click="logout">Log Out</button>
   </div>
 </template>
 

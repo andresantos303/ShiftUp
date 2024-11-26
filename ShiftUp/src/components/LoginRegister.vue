@@ -86,10 +86,12 @@ export default {
           return;
         }
         console.log("Register:", this.formData.name, this.formData.email, this.formData.password);
-        /* alert("Registration successful"); */
+        alert("Registration successful");
         if(this.formData.name == "admin123"){
+          localStorage.setItem("isAuthenticated", true)
           router.push({path:`/admin/${this.formData.name}`})
         }else{
+          localStorage.setItem("isAuthenticated", true)
           router.push({path:`/participante/${this.formData.name}/profile`})
         }
         
