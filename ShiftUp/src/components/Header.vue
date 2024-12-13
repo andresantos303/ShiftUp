@@ -1,83 +1,67 @@
 <template>
-  <header class="header">
-    <div class="logo">
-      <img alt="ShiftUp Logo" class="icon" src="@/assets/logo.png"/>
+  <nav class="bg-black fixed w-full z-20 top-0 left-0 ">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <!-- Logo Section -->
+      <RouterLink to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <img src="@/assets/logo.png" class="h-8" alt="ShiftUp Logo">
+      </RouterLink>
+
+      <!-- Actions and Hamburger Button -->
+      <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        <RouterLink to="/login" class="hidden md:block text-white text-base px-8 py-3">
+          Log In
+        </RouterLink>
+        <RouterLink to="/tickets" class="hidden md:block  bg-custom-gradient text-white text-base px-8 py-3 rounded-full">
+          Buy Ticket
+        </RouterLink>
+        <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false" @click="toggleMenu">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14" aria-hidden="true">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Navbar Links -->
+      <div :class="['items-center justify-between w-full md:flex md:w-auto md:order-1', { hidden: !isMenuOpen }]" id="navbar-sticky">
+        <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-700 rounded-lg bg-gray-800 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-black">
+          <li>
+            <RouterLink to="/" class="block py-2 px-3 text-[#9A9A9A] rounded md:bg-transparent md:p-0 hover:text-white">Home</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/speakers" class="block py-2 px-3 text-[#9A9A9A] rounded md:bg-transparent md:p-0 hover:text-white">Speakers</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/schedule" class="block py-2 px-3 text-[#9A9A9A] rounded md:bg-transparent md:p-0 hover:text-white">Schedule</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/tickets" class="block py-2 px-3 text-[#9A9A9A] rounded md:bg-transparent md:p-0 hover:text-white">Tickets</RouterLink>
+          </li>
+          <li class="md:hidden">
+            <RouterLink to="/login" class="block py-2 px-3 text-white  hover:text-purple-500">Login</RouterLink>
+          </li>
+          <li class="md:hidden">
+            <RouterLink to="/tickets" class="mt-8 inline-block bg-custom-gradient text-white text-base px-8 py-3 rounded-full">Buy Ticket</RouterLink>
+          </li>
+        </ul>
+      </div>
     </div>
-    <nav class="navigation">
-      <ul>
-        <li>
-          <RouterLink to="/">Home</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/speakers">Speakers</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/schedule">Schedule</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/tickets">Tickets</RouterLink>
-        </li>
-      </ul>
-    </nav>
-    <div class="actions">
-      <RouterLink to="/login" class="login-btn" tag="button">Login</RouterLink>
-      <RouterLink to="/tickets" class="buy-ticket-btn" tag="button">Buy ticket</RouterLink>
-    </div>
-  </header>
+  </nav>
 </template>
 
-<style scoped>
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background-color: black;
-  color: white;
-}
+<script>
+export default {
+  data() {
+    return {
+      isMenuOpen: false,
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+    },
+  },
+};
+</script>
 
-.logo {
-  display: flex;
-  align-items: center;
-}
 
-.navigation ul {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.navigation ul li {
-  margin: 0 1rem;
-}
-
-.navigation ul li a {
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-}
-
-.navigation ul li a.active {
-  font-weight: bold;
-}
-
-.login-btn {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-right: 1rem;
-}
-
-.actions .buy-ticket-btn {
-  background: linear-gradient(90deg, #6a00ff, #9400ff);
-  border: none;
-  color: white;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  cursor: pointer;
-}
-</style>

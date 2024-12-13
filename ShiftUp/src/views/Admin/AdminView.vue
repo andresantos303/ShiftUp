@@ -1,19 +1,21 @@
+<template>
+  <HeaderA/>
+  <!-- Page Content -->
+  <main class="flex-1 flex items-center justify-center bg-gray-100 mt-32">
+      <div class="text-center">
+        <h1 class="text-4xl font-bold text-gray-700">This is an Admin view page</h1>
+      </div>
+    </main>
+  
+</template>
 <script>
-import HeaderP from "../../components/HeaderP.vue";
+import HeaderA from "@/components/HeaderA.vue";
 
 export default {
   components: {
-    HeaderP,
+    HeaderA,
   },
 };
 </script>
-
-<template>
-  <HeaderP/>
-  <div>
-    <h1>This is an Admin page</h1>
-    <h2>Need to change header</h2>
-  </div>
-</template>
 
 <style></style>

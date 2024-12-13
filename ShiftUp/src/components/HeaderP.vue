@@ -1,118 +1,103 @@
 <template>
-  <header class="header">
-    <div class="container">
-      <!-- Logo e título -->
-      <div class="logo">
-        <img
-          alt="ShiftUp Participante Logo"
-          class="icon"
-          src="@/assets/logoP.jpg"
-        />
+  <div class="flex h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md">
+      <div class="flex m-8 h-16 border-b">
+        <img alt="ShiftUp Participante Logo" class="h-10" src="@/assets/LogoP.png" />
       </div>
-
-      <!-- Navegação -->
-      <nav class="nav">
-        <RouterLink :to="`/participante/${id}/events`" class="nav-link">Events</RouterLink>
-        <RouterLink :to="`/participante/${id}/communication`" class="nav-link">Communication</RouterLink>
-        <RouterLink :to="`/participante/${id}/merchandising`" class="nav-link">Merchandising</RouterLink>
-        <RouterLink :to="`/participante/${id}/volunteering`" class="nav-link">Volunteering</RouterLink>
-      </nav>
-
-      <!-- Ícones de notificações e perfil -->
-      <div class="icons">
-        <div class="icon notification">
-          <span class="dot"></span>
-          <img src="@/assets/notification-icon.png" alt="Notification Icon" />
-        </div>
-        <RouterLink :to="`/participante/${id}/profile`" class="icon profile" tag="div">
-          <img src="@/assets/profile-icon.png" alt="Profile Icon" />
+      <nav class="mt-6">
+        <RouterLink :to="`/participante/${id}/events`"
+          class="block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">
+          Events
         </RouterLink>
+        <RouterLink :to="`/participante/${id}/communication`"
+          class="block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">
+          Communication
+        </RouterLink>
+        <RouterLink :to="`/participante/${id}/merchandising`"
+          class="block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">
+          Merchandising
+        </RouterLink>
+        <RouterLink :to="`/participante/${id}/volunteering`"
+          class="block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">
+          Volunteering
+        </RouterLink>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+      <div class="flex items-center justify-end space-x-4 bg-white p-4">
+        <!-- Notification Icon -->
+        <div class="relative">
+          <p>notification</p>
+        </div>
+
+        <!-- Participant Image -->
+        <div class="relative">
+          <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
+            @click="toggleDropdown">
+            <span class="sr-only">Open user menu</span>
+            <img class="w-8 h-8 rounded-full" src="@/assets/profile-icon.png" alt="Participant Icon" />
+          </button>
+          <!-- Dropdown Menu -->
+          <div v-if="dropdownOpen"
+            class="z-50 absolute right-0 mt-2 w-48 bg-gray-50 border border-gray-200 divide-y divide-gray-200 rounded-lg shadow">
+            <div class="px-4 py-3">
+              <span class="block text-sm text-gray-900">Bonnie Green</span>
+              <span class="block text-sm text-gray-500 truncate">name@flowbite.com</span>
+            </div>
+            <ul class="py-2">
+            
+              <li>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Settings</a>
+              </li>
+            
+              <li>
+                <button @click="logout"
+                  class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
+                  Log out
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
-  </header>
+
+      <!-- Page Content -->
+      <div class="mt-4">
+        <slot></slot>
+      </div>
+    </main>
+  </div>
 </template>
 
 <script>
 import { RouterLink, useRoute } from "vue-router";
+import { ref } from "vue";
+
 export default {
   setup() {
-    const route = useRoute(); // Acessa os parâmetros da URL
-    const id = route.params.id; // Obtém o ID da URL
+    const route = useRoute();
+    const id = route.params.id;
+    const dropdownOpen = ref(false);
+
+    const toggleDropdown = () => {
+      dropdownOpen.value = !dropdownOpen.value;
+    };
+
+    const logout = () => {
+      console.log("User logged out");
+    };
+
+    return { id, dropdownOpen, toggleDropdown, logout };
   },
 };
 </script>
 
 <style scoped>
-/* Estilo geral do cabeçalho */
-.header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-}
-
-/* Container para centralizar o conteúdo */
-.container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 1200px;
-}
-
-/* Logo */
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-/* Navegação */
-.nav {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-link {
-  font-size: 14px;
-  color: gray;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.nav-link:hover {
-  color: navy;
-  font-weight: bold;
-}
-
-/* Ícones */
-.icons {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.icon {
-  position: relative;
-  width: 24px;
-  height: 24px;
-}
-
-.icon img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.notification .dot {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  width: 8px;
-  height: 8px;
-  background-color: red;
-  border-radius: 50%;
+/* Custom hover for dropdown */
+button:focus {
+  outline: none;
 }
 </style>

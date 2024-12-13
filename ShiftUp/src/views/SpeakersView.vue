@@ -12,7 +12,7 @@ export default {
 
 <template>
   <Header/>
-  <div>
+  <div class="pt-24">
     <h1>This is an speakers page</h1>
   </div>
   <Footer/>
