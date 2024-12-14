@@ -74,6 +74,7 @@
 
 <script>
 import { RouterLink, useRoute } from "vue-router";
+import router from '@/router';
 import { ref } from "vue";
 
 export default {
@@ -87,7 +88,8 @@ export default {
     };
 
     const logout = () => {
-      console.log("User logged out");
+      localStorage.removeItem("isAuthenticated")
+      router.push("/")
     };
 
     return { id, dropdownOpen, toggleDropdown, logout };
