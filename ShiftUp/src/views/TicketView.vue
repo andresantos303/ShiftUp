@@ -12,14 +12,9 @@
             to your team. Don't miss out!
           </p>
         </div>
-        <!-- aquii seria um v-for  -->
+        <!-- Utilizando v-for para exibir os tickets da store -->
         <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
-          <TicketCard title="Starter" description="Best option for personal use & for your next project." price="$29"
-            priceSuffix="/ticket" :benefits="['Access to keynotes', 'No setup, or hidden fees']" link="/login" />
-          <TicketCard title="Company" description="Great for teams, extended support included." price="$99"
-            priceSuffix="/ticket" :benefits="['Priority seating', 'No setup, or hidden fees']" link="/login" />
-          <TicketCard title="Enterprise" description="For large teams, full access and premium support." price="$499"
-            priceSuffix="/ticket" :benefits="['Exclusive sessions', 'No setup, or hidden fees']" link="/login" />
+          <TicketCard v-for="ticket in tickets" :key="ticket.id" :title="ticket.name" :description="ticket.description" :price="`$${ticket.price}`" priceSuffix="/ticket" :benefits="ticket.benefits" link="/login"/>
         </div>
       </div>
     </section>
@@ -27,19 +22,28 @@
   <Footer />
 </template>
 
-
 <script>
 import Header from "../components/Header.vue";
 import Footer from '@/components/Footer.vue';
 import button from "@/components/ui/button.vue";
 import TicketCard from "@/components/ui/ticketCard.vue";
+import { useTicketsStore } from "@/stores/tickets"; // Importando a store
 
 export default {
   components: {
     Header,
     Footer,
     TicketCard,
-    button
+    button,
+  },
+  setup() {
+    // Acessando a store
+    const ticketsStore = useTicketsStore();
+    const tickets = ticketsStore.tickets; // Dados da store
+
+    return {
+      tickets,
+    };
   },
 };
 </script>

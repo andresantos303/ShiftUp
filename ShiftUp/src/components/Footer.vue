@@ -8,8 +8,7 @@
           <img src="@/assets/logoGradient.png" alt="ShiftUp Logo" />
         </div>
         <p class="text-sm mb-3 leading-relaxed">
-          Sed ut perspiciatis unde omnis is iste natus error sit amet voluptatem
-          totam rem aperiam.
+          Innovation, Technology, and the Future
         </p>
         <p class="text-sm font-bold text-gray-800">📞 +351 999 999 999</p>
       </div>

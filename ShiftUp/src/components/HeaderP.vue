@@ -35,9 +35,7 @@
 
         <!-- Participant Image -->
         <div class="relative">
-          <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
-            @click="toggleDropdown">
-            <span class="sr-only">Open user menu</span>
+          <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300" @click="toggleDropdown">
             <img class="w-8 h-8 rounded-full" src="@/assets/profile-icon.png" alt="Participant Icon" />
           </button>
           <!-- Dropdown Menu -->
@@ -48,11 +46,9 @@
               <span class="block text-sm text-gray-500 truncate">name@flowbite.com</span>
             </div>
             <ul class="py-2">
-            
               <li>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Settings</a>
+                <button @click="profile" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">Profile</button>
               </li>
-            
               <li>
                 <button @click="logout"
                   class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
@@ -87,12 +83,17 @@ export default {
       dropdownOpen.value = !dropdownOpen.value;
     };
 
+    const profile = () => {
+      router.push({path: `/participante/${user.id}/profile`});
+    };
+
     const logout = () => {
       localStorage.removeItem("isAuthenticated")
+      localStorage.removeItem("user")
       router.push("/")
     };
 
-    return { id, dropdownOpen, toggleDropdown, logout };
+    return { id, dropdownOpen, toggleDropdown, logout, profile };
   },
 };
 </script>

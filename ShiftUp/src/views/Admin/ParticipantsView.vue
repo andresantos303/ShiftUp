@@ -10,7 +10,7 @@
             id="dropdownActionButton"
             data-dropdown-toggle="dropdownAction"
             class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5"
-            type="button">
+            role="button">
             <span class="sr-only">Action button</span> Action
             <svg
               class="w-2.5 h-2.5 ms-2.5"
@@ -86,7 +86,7 @@
             </svg>
           </div>
           <input
-            type="text"
+            role="text"
             id="table-search-users"
             class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
             placeholder="Search for users"
@@ -94,8 +94,9 @@
         </div>
       </div>
 
-      <!-- BaseTable Component -->
-      <BaseTable :columns="columns" :rows="rows" />
+      <BaseTable :columns="columns" :rows="users"/>
+
+      <button class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mt-5" role="button">New Participant</button>
     </div>
   </main>
 </template>
@@ -103,32 +104,39 @@
 <script>
 import HeaderA from "@/components/HeaderA.vue";
 import BaseTable from "@/components/ui/baseTable.vue";
+import { useUsersStore } from "@/stores/users";
+import { computed } from "vue";
 
 export default {
   components: {
     HeaderA,
     BaseTable,
   },
-  data() {
+  setup() {
+    const usersStore = useUsersStore();
+
+    // Dados dos usuários formatados para a tabela
+    const users = computed(() =>
+      usersStore.users.map((user) => ({
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        ticket: user.ticket || "No Ticket",
+        action: "Edit",
+      }))
+    );
+
     return {
-      // Definindo as colunas da tabela para usuários
       columns: [
-        { label: 'ID', field: 'id' },
-        { label: 'Name', field: 'name' },
-        { label: 'Email', field: 'email' },
-        { label: 'User Type', field: 'type' },
-        { label: 'Status', field: 'status' },
-        { label: 'Action', field: 'action' },
+        { label: "ID", field: "id" },
+        { label: "Name", field: "name" },
+        { label: "Email", field: "email" },
+        { label: "User role", field: "role" },
+        { label: "Ticket", field: "ticket" },
+        { label: "Action", field: "action" },
       ],
-      // Definindo as linhas de dados para usuários
-      rows: [
-        { id: 1, name: 'John Doe', email: 'john.doe@example.com', type: 'VIP', status: 'Completed', action: 'Edit' },
-        { id: 2, name: 'Jane Smith', email: 'jane.smith@example.com', type: 'Regular', status: 'Processing', action: 'Edit' },
-        { id: 3, name: 'Bob Johnson', email: 'bob.johnson@example.com', type: 'Executive', status: 'Rejected', action: 'Edit' },
-        { id: 4, name: 'Alice Brown', email: 'alice.brown@example.com', type: 'Regular', status: 'Completed', action: 'Edit' },
-        { id: 5, name: 'Charlie Davis', email: 'charlie.davis@example.com', type: 'VIP', status: 'Processing', action: 'Edit' },
-        // Adicione mais usuários conforme necessário
-      ],
+      users,
     };
   },
 };

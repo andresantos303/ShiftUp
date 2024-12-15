@@ -18,7 +18,7 @@
         <input type="text" id="name" v-model="formData.name" required />
       </div>
 
-      <!-- Username / Email -->
+      <!-- Email -->
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="email" id="email" v-model="formData.email" required />
@@ -52,51 +52,104 @@
 </template>
 
 <script>
-import router from '@/router';
+import { useUsersStore } from "@/stores/users";
+import router from "@/router";
+import { ref } from "vue";
+
 export default {
-  data() {
-    return {
-      isLogin: true, // Toggle between Login and Register
-      formData: {
-        email: "",
-        password: "",
-        confirmPassword: "", // Used only for registration
-      },
-    };
-  },
-  methods: {
-    toggleForm(isLogin) {
-      this.isLogin = isLogin;
-      this.formData = {
+  setup() {
+    const usersStore = useUsersStore();
+    const isLogin = ref(true);
+    const formData = ref({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+
+    const toggleForm = (isLoginMode) => {
+      isLogin.value = isLoginMode;
+      formData.value = {
         name: "",
         email: "",
         password: "",
         confirmPassword: "",
-      }; // Clear form data when toggling
-    },
-    handleSubmit() {
-      if (this.isLogin) {
+      };
+    };
+
+    const handleSubmit = () => {
+      if (isLogin.value) {
         // Handle login
-        console.log("Login:", this.formData.email, this.formData.password);
-        alert("Login successful");
+        const user = usersStore.users.find(
+          (usr) =>
+            usr.email === formData.value.email &&
+            usr.password === formData.value.password
+        );
+
+        if (user) {
+          localStorage.setItem("isAuthenticated", true);
+          localStorage.setItem("user", [user.id, user.role]);
+
+          if (user.role === "admin") {
+            router.push("/admin/dashboard");
+            router.push({ path: `/admin/${user.id}` });
+          } else if (user.role === "participant") {
+            router.push({path: `/participante/${user.id}/profile`});
+            /* if (user.ticket === null) {
+              router.push("/tickets");
+            } else {
+              router.push({path: `/participante/${user.id}/profile`});
+            } */
+          }
+        } else {
+          alert("Invalid email or password");
+        }
       } else {
         // Handle registration
-        if (this.formData.password !== this.formData.confirmPassword) {
+        if (formData.value.password !== formData.value.confirmPassword) {
           alert("Passwords do not match");
           return;
         }
-        console.log("Register:", this.formData.name, this.formData.email, this.formData.password);
-        alert("Registration successful");
-        if(this.formData.name == "admin123"){
-          localStorage.setItem("isAuthenticated", true)
-          router.push({path:`/admin/${this.formData.name}`})
-        }else{
-          localStorage.setItem("isAuthenticated", true)
-          router.push({path:`/participante/${this.formData.name}/profile`})
+
+        // Verify if email already exists
+        const existingUser = usersStore.users.find(
+          (u) => u.email === formData.value.email
+        );
+
+        if (existingUser) {
+          alert("Email is already registered");
+          return;
         }
-        
+
+        const newUser = {
+          id: Date.now(),
+          name: formData.value.name,
+          email: formData.value.email,
+          password: formData.value.password,
+          age: "",
+          job: "",
+          picture: "",
+          role: "participant",
+          conferences: [],
+          ticket: null,
+        };
+
+        usersStore.addUser(newUser);
+
+        // Login após o registro
+        localStorage.setItem("isAuthenticated", true);
+        localStorage.setItem("userId", [newUser.id, newUser.role]);
+        alert("Account registed");
+        router.push("/tickets");
       }
-    },
+    };
+
+    return {
+      isLogin,
+      formData,
+      toggleForm,
+      handleSubmit,
+    };
   },
 };
 </script>

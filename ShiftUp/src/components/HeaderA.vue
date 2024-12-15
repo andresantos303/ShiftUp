@@ -36,10 +36,10 @@
               <ul class="py-2">
                 <li>
                   <button
-                    @click="settings"
+                    @click="profile"
                     class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
                   >
-                    Settings
+                    Profile
                   </button>
                 </li>
                 <li>
@@ -72,8 +72,6 @@
         <li><RouterLink :to="`/admin/${id}/volunteers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Volunteers</RouterLink></li>
         <li><RouterLink :to="`/admin/${id}/speakers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Speakers</RouterLink></li>
         <li><RouterLink :to="`/admin/${id}/communication`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Communication</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/communication`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Itenerary</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/communication`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Location</RouterLink></li>
       </ul>
     </div>
   </aside>
@@ -105,14 +103,15 @@ export default {
 
     const logout = () => {
       localStorage.removeItem("isAuthenticated")
+      localStorage.removeItem("user")
       router.push("/")
     };
 
-    const settings = () => {
-      console.log("User clicked settings");
+    const profile = () => {
+      console.log("User profile");
     };
 
-    return { id, sidebarOpen, dropdownOpen, toggleSidebar, toggleDropdown, logout, settings };
+    return { id, sidebarOpen, dropdownOpen, toggleSidebar, toggleDropdown, logout, profile };
   },
 };
 </script>

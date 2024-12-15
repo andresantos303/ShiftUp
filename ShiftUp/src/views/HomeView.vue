@@ -53,10 +53,9 @@
 
     <section>
       <div class="bg-custom-gradient p-12 flex flex-col items-center justify-center gap-8 text-white">
-        <p>Get TailGrids Only at 99$</p>
-        <h1 class="text-bold text-4xl">Create You Next Web Project With Our TailGrids UI</h1>
-        <p>There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in
-          some form.</p>
+        <p>Get a ticket Only at 29€</p>
+        <h1 class="text-bold text-4xl">Innovation, Technology, and the Future</h1>
+        <p>Join Portugal's leading tech conference and transform your vision of the digital future.</p>
         <Button to="/tickets" label="Get my sit" bg-color="bg-white" text-color="text-blue-500" />
       </div>
     </section>

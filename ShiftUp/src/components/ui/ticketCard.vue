@@ -10,17 +10,8 @@
       </div>
       <ul role="list" class="mb-8 space-y-4 text-left">
         <li v-for="(benefit, index) in benefits" :key="index" class="flex items-center space-x-3">
-          <svg
-            class="flex-shrink-0 w-5 h-5 text-purple-500"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-              clip-rule="evenodd"
-            ></path>
+          <svg class="flex-shrink-0 w-5 h-5 text-purple-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
           </svg>
           <span>{{ benefit }}</span>
         </li>
@@ -37,12 +28,12 @@
   </template>
   
   <script>
-  import Button from "@/components/ui/button.vue"; // Certifique-se de que o caminho está correto
+  import Button from "@/components/ui/button.vue";
   
   export default {
     name: "TicketCard",
     components: {
-      Button // Registra o componente Button
+      Button
     },
     props: {
       title: {

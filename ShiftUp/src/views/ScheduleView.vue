@@ -4,56 +4,38 @@
     <div class="px-4 lg:px-16">
       <h1 class="text-2xl font-bold mb-8 text-center">Event Schedule</h1>
 
-      <!-- Tag de datas -->
-
-      <!-- nao esta a funcionar ainda -->
       <div class="flex justify-center mb-8">
-        <div class="px-4 py-2 mx-2 rounded-full cursor-pointer"
-          :class="{ 'bg-custom-gradient text-white': selectedDate === 'november11', 'bg-gray-200 text-gray-600': selectedDate !== 'november11' }"
-          @click="selectDate('november11')">
+        <div
+          class="px-4 py-2 mx-2 rounded-full cursor-pointer"
+          :class="{ 'bg-custom-gradient text-white': selectedDate === 'November 11', 'bg-gray-200 text-gray-600': selectedDate !== 'November 11' }"
+          @click="selectDate('November 11')">
           November 11
         </div>
-        <div class="px-4 py-2 mx-2 rounded-full cursor-pointer"
-          :class="{ 'bg-custom-gradient text-white': selectedDate === 'november12', 'bg-gray-200 text-gray-600': selectedDate !== 'november12' }"
-          @click="selectDate('november12')">
+        <div
+          class="px-4 py-2 mx-2 rounded-full cursor-pointer"
+          :class="{ 'bg-custom-gradient text-white': selectedDate === 'November 12', 'bg-gray-200 text-gray-600': selectedDate !== 'November 12' }"
+          @click="selectDate('November 12')">
           November 12
         </div>
-        <div class="px-4 py-2 mx-2 rounded-full cursor-pointer"
-          :class="{ 'bg-custom-gradient text-white': selectedDate === 'november13', 'bg-gray-200 text-gray-600': selectedDate !== 'november13' }"
-          @click="selectDate('november13')">
+        <div
+          class="px-4 py-2 mx-2 rounded-full cursor-pointer"
+          :class="{ 'bg-custom-gradient text-white': selectedDate === 'November 13', 'bg-gray-200 text-gray-600': selectedDate !== 'November 13' }"
+          @click="selectDate('November 13')">
           November 13
         </div>
       </div>
 
       <div class="grid gap-6 lg:grid-cols-2">
-        <!-- aquii deve ser um v-for conforme as palestras que tivermos -->
-        <EventCard location="Main Stage" title="Welcome to Shift Up" date="November 11" time="6.00PM - 6.20PM"
-          locationDetail="Centre Stage MEO Arena" :speakers="[
-            { image: 'https://placehold.co/400', name: 'Etosha Cave', title: 'Co-founder & Chief Science Officer' },
-            { image: 'https://placehold.co/400', name: 'John Doe', title: 'CEO Example Corp' }
-          ]" />
-
-        <!-- Outro evento com apenas um palestrante -->
-        <EventCard location="Innovation Hall" title="Future of Streaming" date="November 12" time="2.00PM - 3.00PM"
-          locationDetail="Hall 3" :speakers="[
-            { image: 'https://placehold.co/400', name: 'Jane Smith', title: 'VP of Engineering' }
-          ]" />
-        <EventCard location="Innovation Hall" title="Future of Streaming" date="November 12" time="2.00PM - 3.00PM"
-          locationDetail="Hall 3" :speakers="[
-            { image: 'https://placehold.co/400', name: 'Jane Smith', title: 'VP of Engineering' }
-          ]" />
-        <EventCard location="Innovation Hall" title="Future of Streaming" date="November 12" time="2.00PM - 3.00PM"
-          locationDetail="Hall 3" :speakers="[
-            { image: 'https://placehold.co/400', name: 'Jane Smith', title: 'VP of Engineering' }
-          ]" />
-        <EventCard location="Innovation Hall" title="Future of Streaming" date="November 12" time="2.00PM - 3.00PM"
-          locationDetail="Hall 3" :speakers="[
-            { image: 'https://placehold.co/400', name: 'Jane Smith', title: 'VP of Engineering' }
-          ]" />
-        <EventCard location="Innovation Hall" title="Future of Streaming" date="November 12" time="2.00PM - 3.00PM"
-          locationDetail="Hall 3" :speakers="[
-            { image: 'https://placehold.co/400', name: 'Jane Smith', title: 'VP of Engineering' }
-          ]" />
+        <EventCard
+          v-for="conference in filteredConferences"
+          :key="conference.id"
+          :location="conference.category"
+          :title="conference.title"
+          :date="conference.date"
+          :time="conference.time"
+          :locationDetail="conference.local"
+          :speakers="conference.speakers.map(speaker => ({ image: 'https://placehold.co/400', name: speaker, title: 'Speaker' }))"
+        />
       </div>
     </div>
   </div>
@@ -61,15 +43,38 @@
 </template>
 
 <script>
+import { ref, computed } from "vue";
 import Header from "../components/Header.vue";
 import Footer from "@/components/Footer.vue";
 import EventCard from "@/components/ui/EventCard.vue";
+import { useConferencesStore } from "@/stores/conferences";
 
 export default {
   components: {
     Header,
     Footer,
     EventCard,
+  },
+  setup() {
+    const conferencesStore = useConferencesStore();
+
+    const selectedDate = ref("November 11");
+
+    const filteredConferences = computed(() =>
+      conferencesStore.conferences.filter(
+        (conference) => conference.date === selectedDate.value
+      )
+    );
+
+    const selectDate = (date) => {
+      selectedDate.value = date;
+    };
+
+    return {
+      selectedDate,
+      filteredConferences,
+      selectDate,
+    };
   },
 };
 </script>
