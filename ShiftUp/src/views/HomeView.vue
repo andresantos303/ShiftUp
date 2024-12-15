@@ -4,7 +4,7 @@
     <HeroSection />
 
     <InfoSection title="What is ShiftUp"
-      description="ShiftUp 2025 is Portugal’s leading tech conference, happening in April at the iconic Coliseu do Porto. Over three days, participants will explore cutting-edge topics like AI, Blockchain, and Sustainability through talks, workshops, and networking with global innovators. Join renowned speakers, engage in hands-on sessions, and connect with like-minded professionals. With exclusive content, gamified activities, and premium merchandise, ShiftUp is more than an event—it’s a transformative tech experience."
+      description="ShiftUp 2025 is Portugal’s leading tech conference, happening in April at the iconic Coliseu do Porto. Over three days, participants will explore cutting-edge topics like AI, Blockchain, and Sustainability through talks, workshops, and networking with global innovators. Join renowned speakers, engage in hands-on sessions, and connect with like-minded professionals. With exclusive content, gamified activities, and premium merchandise, ShiftUp is more than an event - it’s a transformative tech experience."
       imageSrc="@/assets/logoIcon.png" imageAlt="ShiftUp Logo" />
 
     <section class="p-8">
