@@ -44,7 +44,7 @@
                 </li>
                 <li>
                   <button
-                    @click="logout"
+                    @click="logout()"
                     class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
                   >
                     Log Out

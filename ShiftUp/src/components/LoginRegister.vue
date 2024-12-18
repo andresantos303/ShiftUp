@@ -88,7 +88,8 @@ export default {
 
         if (user) {
           localStorage.setItem("isAuthenticated", true);
-          localStorage.setItem("user", [user.id, user.role]);
+          localStorage.setItem("user", JSON.stringify({ id: user.id, role: user.role }));
+
 
           if (user.role === "admin") {
             router.push("/admin/dashboard");
@@ -138,7 +139,7 @@ export default {
 
         // Login após o registro
         localStorage.setItem("isAuthenticated", true);
-        localStorage.setItem("userId", [newUser.id, newUser.role]);
+        localStorage.setItem("user", JSON.stringify({ id: newUser.id, role: newUser.role }));
         alert("Account registed");
         router.push("/tickets");
       }

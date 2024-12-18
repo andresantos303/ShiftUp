@@ -35,7 +35,7 @@ export const useUsersStore = defineStore('users', {
         age: "25",
         job: "Constructor",
         picture: "",
-        role: "participant",
+        role: "voluntary",
         conferences: [], 
         ticket: null
       },
@@ -66,10 +66,10 @@ export const useUsersStore = defineStore('users', {
         user.conferences.push(conferenceId);
       }
     },
-    addTicketToUser(userId, ticketId) {
+    addTicketToUser(userId, ticketName) {
       const user = this.users.find(user => user.id === userId);
       if (user) {
-        user.ticket = ticketId;
+        user.ticket = ticketName;
       }
     }
   },
@@ -77,9 +77,7 @@ export const useUsersStore = defineStore('users', {
     getUserById: (state) => (id) => {
       return state.users.find(user => user.id === id);
     },
-    getVolunteers: (state) => (id) => {
-      return state.users.find(user => user.role === voluntary);
-    },
+    getVolunteers: (state) => state.users.filter((user) => user.role === "voluntary"),
   },
   persist: {
     enabled: true,

@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+import { useUsersStore } from './users';
+
 
 export const useTicketsStore = defineStore('ticket', {
   state: () => ({
@@ -42,10 +44,12 @@ export const useTicketsStore = defineStore('ticket', {
         this.tickets[index] = { ...this.tickets[index], ...updatedTicket };
       }
     },
-    purchaseTicket({ ticketId, userId }) {
-      const ticket = this.tickets.find(item => item.id === ticketId);
+    purchaseTicket({ ticketName, userId }) {
+      const usersStore = useUsersStore();
+      const ticket = this.tickets.find(item => item.name === ticketName);
       if (ticket && !ticket.purchased.includes(userId)) {
         ticket.purchased.push(userId);
+        usersStore.addTicketToUser(userId,ticketName);
       }
     }
   },
