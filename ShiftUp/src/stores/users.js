@@ -10,7 +10,7 @@ export const useUsersStore = defineStore('users', {
         password: "And123",
         age: "",
         job: "",
-        picture: "@/assets/profile-icon.png",
+        picture: "/public/images/profile-icon.png",
         role: "admin",
         conferences: [],
         ticket: null
@@ -22,7 +22,7 @@ export const useUsersStore = defineStore('users', {
         password: "And123",
         age: "",
         job: "",
-        picture: "@/assets/profile-icon.png",
+        picture: "/public/images/profile-icon.png",
         role: "participant",
         conferences: [], 
         ticket: null

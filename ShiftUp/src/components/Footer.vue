@@ -5,7 +5,7 @@
       <!-- Logo and description -->
       <div class="flex flex-col max-w-xs">
         <div class="flex items-center mb-4">
-          <img src="@/assets/logoGradient.png" alt="ShiftUp Logo" />
+          <img src="/public/images/logoGradient.png" alt="ShiftUp Logo" />
         </div>
         <p class="text-sm mb-3 leading-relaxed">
           Innovation, Technology, and the Future

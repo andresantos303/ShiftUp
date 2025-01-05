@@ -3,7 +3,7 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <!-- Logo Section -->
       <RouterLink to="/" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="@/assets/logo.png" class="h-8" alt="ShiftUp Logo">
+        <img src="/public/images/logo.png" class="h-8" alt="ShiftUp Logo">
       </RouterLink>
 
       <!-- Actions and Hamburger Button -->

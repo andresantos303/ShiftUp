@@ -3,7 +3,7 @@
     <!-- Sidebar -->
     <aside class="w-64 bg-white shadow-md">
       <div class="flex m-8 h-16 border-b">
-        <img alt="ShiftUp Participante Logo" class="h-10" src="@/assets/LogoP.png" />
+        <img alt="ShiftUp Participante Logo" class="h-10" src="/public/images/LogoP.png" />
       </div>
       <nav class="mt-6">
         <RouterLink :to="`/participante/${id}/events`"
@@ -36,7 +36,7 @@
         <!-- Participant Image -->
         <div class="relative">
           <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300" @click="toggleDropdown">
-            <img class="w-8 h-8 rounded-full" src="@/assets/profile-icon.png" alt="Participant Icon" />
+            <img class="w-8 h-8 rounded-full" src="/public/images/profile-icon.png" alt="Participant Icon" />
           </button>
           <!-- Dropdown Menu -->
           <div v-if="dropdownOpen"

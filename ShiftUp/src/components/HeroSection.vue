@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import heroImage from "@/assets/heroImage.png";
+import heroImage from "/public/images/heroImage.png";
 import Button from "@/components/ui/button.vue";
 
 export default {

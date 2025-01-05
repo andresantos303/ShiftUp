@@ -15,7 +15,7 @@
             </svg>
           </button>
           <a href="#" class="flex ms-2 md:me-24">
-            <img src="@/assets/LogoA.png" class="h-8 me-3" alt="Logo Admin" /> <!-- aqui tem que ir para admin view -->
+            <img src="/public/images/LogoA.png" class="h-8 me-3" alt="Logo Admin" /> <!-- aqui tem que ir para admin view -->
           </a>
         </div>
 
