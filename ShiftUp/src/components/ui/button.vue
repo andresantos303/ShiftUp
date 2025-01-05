@@ -47,5 +47,4 @@ export default {
 </script>
 
 <style scoped>
-/* Se necessário, adicione estilos adicionais específicos para o botão */
 </style>
