@@ -1,0 +1,94 @@
+{
+    "speakers": [
+      {
+        "id": 1,
+        "name": "João Silva",
+        "age": 35,
+        "photo": "/public/images/speakers1.png",
+        "profession": "Software Engineer",
+        "description": "Specializes in developing distributed systems with a focus on high performance and scalability.",
+        "conferences": []
+      },
+      {
+        "id": 2,
+        "name": "Maria Santos",
+        "age": 29,
+        "photo": "/public/images/speakers2.png",
+        "profession": "UX/UI Designer",
+        "description": "Works on creating intuitive user experiences for mobile and web applications.",
+        "conferences": []
+      },
+      {
+        "id": 3,
+        "name": "Carlos Ferreira",
+        "age": 40,
+        "photo": "/public/images/speakers3.png",
+        "profession": "Cloud Solutions Architect",
+        "description": "With extensive experience in AWS and Azure, helps companies migrate to the cloud.",
+        "conferences": []
+      },
+      {
+        "id": 4,
+        "name": "Ana Costa",
+        "age": 32,
+        "photo": "/public/images/speakers4.png",
+        "profession": "Artificial Intelligence Engineer",
+        "description": "Works on developing machine learning models for healthcare companies.",
+        "conferences": []
+      },
+      {
+        "id": 5,
+        "name": "Rui Pereira",
+        "age": 28,
+        "photo": "/public/images/speakers5.png",
+        "profession": "Cybersecurity Specialist",
+        "description": "Focuses on protecting systems against cyber threats and ensuring data privacy.",
+        "conferences": []
+      },
+      {
+        "id": 6,
+        "name": "Sofia Almeida",
+        "age": 33,
+        "photo": "/public/images/speakers6.png",
+        "profession": "Digital Product Manager",
+        "description": "Focused on launching innovative products that meet user needs.",
+        "conferences": []
+      },
+      {
+        "id": 7,
+        "name": "Pedro Marques",
+        "age": 38,
+        "photo": "/public/images/speakers7.png",
+        "profession": "Full-Stack Developer",
+        "description": "Experienced in React, Node.js, and MongoDB, builds end-to-end solutions for startups.",
+        "conferences": []
+      },
+      {
+        "id": 8,
+        "name": "Luísa Ribeiro",
+        "age": 31,
+        "photo": "/public/images/speakers8.png",
+        "profession": "Data Analyst",
+        "description": "Specialist in predictive analysis and data visualization for business decision-making.",
+        "conferences": []
+      },
+      {
+        "id": 9,
+        "name": "Miguel Costa",
+        "age": 45,
+        "photo": "/public/images/speakers9.png",
+        "profession": "Data Scientist",
+        "description": "Explores large datasets to uncover patterns and create valuable insights.",
+        "conferences": []
+      },
+      {
+        "id": 10,
+        "name": "Carla Nunes",
+        "age": 27,
+        "photo": "/public/images/speakers10.png",
+        "profession": "Game Developer",
+        "description": "Develops immersive games with a focus on innovative mechanics and high-quality graphics.",
+        "conferences": []
+      }
+    ]
+  }  

@@ -34,6 +34,12 @@ export const useConferencesStore = defineStore('conferences', {
       if (conference && !conference.participants.includes(participantId)) {
         conference.participants.push(participantId);
       }
+    },
+    addSpeakerToConference(conferenceId, speakerId) {
+      const conference = this.conferences.find(conference => conference.id === conferenceId);
+      if (conference && !conference.speakers.includes(speakerId)) {
+        conference.speakers.push(speakerId);
+      }
     }
   },
   getters: {
