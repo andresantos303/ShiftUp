@@ -17,23 +17,21 @@
         <!-- Email -->
         <div class="mb-4 text-left">
           <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-          <input id="email" type="email"
+          <input id="email" type="email" v-model="email"
             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-            placeholder="Enter your email">
+            placeholder="Enter your email" required>
         </div>
 
         <!-- Password -->
         <div class="mb-6 relative text-left">
           <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
           <div class="relative w-full">
-            <input :type="showPassword ? 'text' : 'password'" id="password"
+            <input :type="showPassword ? 'text' : 'password'" id="password" v-model="password"
               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Enter your password">
+              placeholder="Enter your password" required>
 
-            <!-- Icon -->
             <span @click="togglePasswordVisibility"
               class="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500 hover:text-indigo-500">
-              <!-- Icon eye open -->
               <svg v-if="showPassword" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -41,8 +39,6 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-.006.016-.011.033-.017.05a1.018 1.018 0 01-.926.7H3.5a1.018 1.018 0 01-.926-.7c-.006-.017-.011-.034-.017-.05z" />
               </svg>
-
-              <!-- Icon eye close -->
               <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -55,7 +51,7 @@
         <!-- Btn Login -->
         <div class="mb-4">
           <Button :label="'Log in'" :to="'/dashboard'" bgColor="bg-custom-gradient" textColor="text-white"
-            textSize="text-lg" additionalClasses="w-full py-3" />
+            textSize="text-lg" additionalClasses="w-full py-3" @click="handleLogin" />
         </div>
 
         <!-- Create Account Link -->
@@ -77,6 +73,8 @@
 
 <script>
 import Button from './ui/button.vue';
+import { useUsersStore } from "@/stores/users";
+import router from "@/router";
 
 export default {
   components: {
@@ -85,14 +83,37 @@ export default {
   data() {
     return {
       showPassword: false,
+      email: '',
+      password: '',
     };
   },
   methods: {
     togglePasswordVisibility() {
       this.showPassword = !this.showPassword;
     },
+    handleLogin() {
+      const usersStore = useUsersStore();
+      const user = usersStore.users.find(
+        (usr) =>
+          usr.email === this.email &&
+          usr.password === this.password
+      );
+
+      if (user) {
+        localStorage.setItem("isAuthenticated", true);
+        localStorage.setItem("user", JSON.stringify({ id: user.id, role: user.role }));
+
+        if (user.role === "admin") {
+          router.push("/admin/dashboard");
+        } else if (user.role === "participant") {
+          router.push(`/participante/${user.id}/profile`);
+        }
+      } else {
+        alert("Invalid email or password");
+      }
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
