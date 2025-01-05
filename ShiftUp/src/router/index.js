@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import Speakers from '../views/SpeakersView.vue';
 import Shedule from '../views/ScheduleView.vue';
 import Tickets from '../views/TicketView.vue';
+import SpeakeridView from '@/views/SpeakeridView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +17,12 @@ const router = createRouter({
       path: '/speakers',
       name: 'speakers',
       component: Speakers,
+    },
+    {
+      path: '/speaker/:id',
+      name: 'SpeakerDetails',
+      component: SpeakeridView,
+      props: true,
     },
     {
       path: '/schedule',

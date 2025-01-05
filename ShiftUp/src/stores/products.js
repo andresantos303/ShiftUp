@@ -9,13 +9,23 @@ export const useProductsStore = defineStore('products', {
         price: 25,
         description: "A high-quality t-shirt featuring the Shift Up logo. Perfect for event attendees and fans to wear and showcase their support.",
         category: "clothes",
-        purchased: 0
+        purchased: 0,
+        image: null,
       }
     ],
   }),
   actions: {
     addProduct(product) {
-      this.products.push(product);
+      const newProduct = {
+        id: Date.now(), 
+        name: product.name,
+        price: product.price,
+        description: product.description || '',
+        category: product.category,
+        purchased: product.purchased,
+        image: product.image, 
+      };
+      this.products.push(newProduct);
     },
     removeProduct(id) {
       this.products = this.products.filter(product => product.id !== id);
