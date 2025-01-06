@@ -11,14 +11,25 @@
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
             </svg>
           </div>
-          <input type="text" id="table-search-speakers" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search for speakers" />
+          <input
+            v-model="searchQuery"
+            type="text"
+            id="table-search-speakers"
+            class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Search for speakers"
+          />
         </div>
         <!-- Add Speaker Button -->
-        <button @click="openModal" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mt-5 m-4">Add Speaker</button>
+        <button
+          @click="openModal"
+          class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mt-5 m-4"
+        >
+          Add Speaker
+        </button>
       </div>
 
       <!-- BaseTable Component -->
-      <BaseTable :columns="columns" :rows="rows" />
+      <BaseTable :columns="columns" :rows="filteredRows" />
     </div>
   </main>
 
@@ -31,7 +42,7 @@ import HeaderA from "@/components/HeaderA.vue";
 import BaseTable from "@/components/ui/baseTable.vue";
 import Modal from "@/components/ui/Modal.vue";
 import { useSpeakersStore } from "@/stores/speakers"; // Store para palestrantes
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 
 export default {
   components: {
@@ -42,19 +53,32 @@ export default {
   setup() {
     const speakersStore = useSpeakersStore();
     const modalOpen = ref(false); // Controla a visibilidade do modal
+    const searchQuery = ref(""); // Campo de busca
 
     // Computed para pegar os palestrantes da store
-    const rows = computed(() => 
+    const rows = computed(() =>
       speakersStore.speakers.map((speaker) => ({
         id: speaker.id,
         name: speaker.name,
-        email: speaker.email,
-        topic: speaker.topic,
-        date: speaker.date,
-        status: speaker.status,
+        job: speaker.job,
         action: "Edit",
       }))
     );
+
+    // Computed para filtrar palestrantes com base na busca
+    const filteredRows = computed(() => {
+      if (!searchQuery.value) return rows.value;
+      return rows.value.filter((row) =>
+        row.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+      );
+    });
+
+    // Carregar os dados da store ao montar o componente
+    onMounted(async () => {
+      if (!speakersStore.speakers.length) {
+        await speakersStore.fetchTodos();
+      }
+    });
 
     // Função para abrir o modal
     const openModal = () => {
@@ -67,10 +91,14 @@ export default {
     };
 
     // Função para adicionar um novo palestrante
-    const addSpeaker = (newSpeaker) => {
-      if (newSpeaker.name && newSpeaker.email && newSpeaker.topic && newSpeaker.date && newSpeaker.status) {
-        // Adiciona o palestrante à store
-        speakersStore.addSpeaker(newSpeaker);
+    const addSpeaker = async (newSpeaker) => {
+      if (newSpeaker.name && newSpeaker.email && newSpeaker.job) {
+        try {
+          // Adiciona o palestrante à store e recarrega a lista
+          await speakersStore.addSpeaker(newSpeaker);
+        } catch (error) {
+          console.error("Erro ao adicionar palestrante:", error);
+        }
       }
       closeModal(); // Fecha o modal após adicionar
     };
@@ -79,13 +107,12 @@ export default {
       columns: [
         { label: "ID", field: "id" },
         { label: "Name", field: "name" },
-        { label: "Email", field: "email" },
-        { label: "Topic", field: "topic" },
-        { label: "Date", field: "date" },
-        { label: "Status", field: "status" },
+        { label: "Job", field: "job" },
         { label: "Action", field: "action" },
       ],
       rows,
+      filteredRows,
+      searchQuery,
       modalOpen,
       openModal,
       closeModal,
