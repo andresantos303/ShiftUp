@@ -35,32 +35,40 @@
 
 <script>
 import { useSpeakersStore } from "@/stores/speakers";
-import { useRouter } from "vue-router"; // Importa o Vue Router
+import { useRouter } from "vue-router";
 
 export default {
-  name: "ImageGridLayout",
+  name: "SpeakersGrid",
   props: {
     columns: {
       type: Number,
-      default: 4, // Número de colunas (ajustável)
+      default: 4, // Número de colunas ajustável
     },
   },
   computed: {
     formattedColumns() {
       // Obtém os dados da store Pinia
       const speakersStore = useSpeakersStore();
-      const images = speakersStore.speakers;
+      const speakers = speakersStore.speakers;
 
-      // Divide as imagens em "N" colunas (baseado no prop `columns`)
+      // Divide os palestrantes em "N" colunas (baseado no prop `columns`)
       const columns = Array.from({ length: this.columns }, () => []);
-      images.forEach((image, index) => {
-        columns[index % this.columns].push(image); // Adiciona cada imagem na coluna correspondente
+      speakers.forEach((speaker, index) => {
+        columns[index % this.columns].push(speaker); // Adiciona cada palestrante na coluna correspondente
       });
       return columns;
     },
   },
+  async created() {
+    const speakersStore = useSpeakersStore();
+    try {
+      await speakersStore.fetchTodos(); // Chama a ação fetchTodos() para obter os dados
+    } catch (error) {
+      console.error("Error fetching speakers:", error.message);
+    }
+  },
   setup() {
-    const router = useRouter(); // Instância do Vue Router
+    const router = useRouter();
 
     // Função para redirecionar para a página de detalhes do palestrante
     const goToSpeakerDetails = (id) => {
@@ -73,4 +81,3 @@ export default {
   },
 };
 </script>
-
