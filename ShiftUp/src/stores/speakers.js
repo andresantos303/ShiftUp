@@ -11,7 +11,8 @@ export const useSpeakersStore = defineStore("speakers", {
   actions: {
     async fetchTodos() {
       try {
-        this.speakers = await api.get(API_BASE_URL, "speakers");
+        const response = await api.get(API_BASE_URL, "speakers");
+        this.speakers = response;
       } catch (error) {
         throw new Error(`Erro ao obter os speakers: ${error}`);
       }
@@ -65,7 +66,7 @@ export const useSpeakersStore = defineStore("speakers", {
   },
   getters: {
     getSpeakerById: (state) => (id) => {
-      return state.speakers.find((speaker) => speaker.id === id);
-    },
+      return state.speakers.find((speaker) => speaker.id === id.toString());
+    },    
   },
 });
