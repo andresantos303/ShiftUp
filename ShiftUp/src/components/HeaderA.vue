@@ -72,6 +72,7 @@
         <li><RouterLink :to="`/admin/${id}/volunteers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Volunteers</RouterLink></li>
         <li><RouterLink :to="`/admin/${id}/speakers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Speakers</RouterLink></li>
         <li><RouterLink :to="`/admin/${id}/communication`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Communication</RouterLink></li>
+        <li><RouterLink :to="`/admin/${id}/itenerary`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Itenerary</RouterLink></li>
       </ul>
     </div>
   </aside>

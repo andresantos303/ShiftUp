@@ -28,11 +28,13 @@
       imageSrc="/images/ctaSheduleImage.png" imageAlt="ShiftUp Schedule" :showButton="true" buttonLabel="See schedule"
       buttonLink="/schedule" />
 
-
+    <!-- Google Maps -->
     <section class="mx-auto max-w-[1200px] p-8">
-      <h1 class="text-2xl mb-8 font-bold bg-custom-gradient bg-clip-text text-transparent mx-auto max-w-[1200px] ">Meet
-        us here</h1>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7269.885891163209!2d-79.0794359423177!3d43.0829646577661!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d343064ddaf479%3A0xe057259c9676e8ce!2sQueen%20Victoria%20Park!5e1!3m2!1spt-PT!2spt!4v1736114611352!5m2!1spt-PT!2spt" width="908" height="320" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <h1 class="text-2xl mb-8 font-bold bg-custom-gradient bg-clip-text text-transparent mx-auto max-w-[1200px] ">Meet us here</h1>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7269.885891163209!2d-79.0794359423177!3d43.0829646577661!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d343064ddaf479%3A0xe057259c9676e8ce!2sQueen%20Victoria%20Park!5e1!3m2!1spt-PT!2spt!4v1736114611352!5m2!1spt-PT!2spt"
+        width="908" height="320" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
     </section>
 
     <section>

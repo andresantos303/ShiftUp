@@ -92,6 +92,12 @@ const router = createRouter({
       meta: { requiresAuth: true },
       component: () => import('../views/Admin/VolunteersView.vue'),
     },
+    {
+      path: '/admin/:id/itenerary',
+      name: 'iteneraryAdmin',
+      meta: { requiresAuth: true },
+      component: () => import('../views/Admin/iteneraryView.vue'),
+    },
     //Participante Routes
     {
       path: '/participante/:id',
