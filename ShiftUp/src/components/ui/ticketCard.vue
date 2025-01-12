@@ -61,17 +61,18 @@ export default {
       if (isAuthenticated === "true") {
         const user = JSON.parse(localStorage.getItem("user"));
         const ticketName = this.title;
-
         if (user && user.id) {
           const ticketsStore = useTicketsStore();
           ticketsStore.purchaseTicket(ticketName, user.id);
+          console.log(ticketsStore.tickets)
           alert("Ticket purchased successfully!");
+          router.push(`/participante/${user.id}/profile`);
         } else {
           console.error("User data is missing from localStorage.");
         }
       } else {
         alert("You need to be logged in to purchase a ticket.");
-        router.push("login"); // Navegação para a página de login
+        router.push("login");
       }
     }
   }

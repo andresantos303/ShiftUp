@@ -18,27 +18,47 @@ export const useConferencesStore = defineStore('conferences', {
   }),
   actions: {
     addConference(conference) {
-      this.conferences.push(conference);
+      try {
+        this.conferences.push(conference);
+      } catch (error) {
+        console.error('Error adding conference:', error);
+      }
     },
     removeConference(id) {
-      this.conferences = this.conferences.filter(conference => conference.id !== id);
+      try {
+        this.conferences = this.conferences.filter(conference => conference.id !== id);
+      } catch (error) {
+        console.error('Error removing conference:', error);
+      }
     },
     updateConference(updatedConference) {
-      const index = this.conferences.findIndex(conference => conference.id === updatedConference.id);
-      if (index !== -1) {
-        this.conferences[index] = { ...this.conferences[index], ...updatedConference };
+      try {
+        const index = this.conferences.findIndex(conference => conference.id === updatedConference.id);
+        if (index !== -1) {
+          this.conferences[index] = { ...this.conferences[index], ...updatedConference };
+        }
+      } catch (error) {
+        console.error('Error updating conference:', error);
       }
     },
     addParticipantToConference(conferenceId, participantId) {
-      const conference = this.conferences.find(conference => conference.id === conferenceId);
-      if (conference && !conference.participants.includes(participantId)) {
-        conference.participants.push(participantId);
+      try {
+        const conference = this.conferences.find(conference => conference.id === conferenceId);
+        if (conference && !conference.participants.includes(participantId)) {
+          conference.participants.push(participantId);
+        }
+      } catch (error) {
+        console.error('Error adding participant to conference:', error);
       }
     },
     addSpeakerToConference(conferenceId, speakerId) {
-      const conference = this.conferences.find(conference => conference.id === conferenceId);
-      if (conference && !conference.speakers.includes(speakerId)) {
-        conference.speakers.push(speakerId);
+      try {
+        const conference = this.conferences.find(conference => conference.id === conferenceId);
+        if (conference && !conference.speakers.includes(speakerId)) {
+          conference.speakers.push(speakerId);
+        }
+      } catch (error) {
+        console.error('Error adding speaker to conference:', error);
       }
     }
   },

@@ -43,33 +43,57 @@ export const useUsersStore = defineStore('users', {
   }),
   actions: {
     addUser(user) {
-      this.users.push(user);
+      try {
+        this.users.push(user);
+      } catch (error) {
+        console.error('Error adding user:', error);
+      }
     },
     removeUser(id) {
-      this.users = this.users.filter(user => user.id !== id);
+      try {
+        this.users = this.users.filter(user => user.id !== id);
+      } catch (error) {
+        console.error('Error removing user:', error);
+      }
     },
     updateUser(updatedUser) {
-      const index = this.users.findIndex(user => user.id === updatedUser.id);
-      if (index !== -1) {
-        this.users[index] = { ...this.users[index], ...updatedUser };
+      try {
+        const index = this.users.findIndex(user => user.id === updatedUser.id);
+        if (index !== -1) {
+          this.users[index] = { ...this.users[index], ...updatedUser };
+        }
+      } catch (error) {
+        console.error('Error updating user:', error);
       }
     },
     changeRole(id, newRole) {
-      const user = this.users.find(user => user.id === id);
-      if (user) {
-        user.role = newRole;
+      try {
+        const user = this.users.find(user => user.id === id);
+        if (user) {
+          user.role = newRole;
+        }
+      } catch (error) {
+        console.error('Error changing user role:', error);
       }
     },
     addConferenceToUser(userId, conferenceId) {
-      const user = this.users.find(user => user.id === userId);
-      if (user && !user.conferences.includes(conferenceId)) {
-        user.conferences.push(conferenceId);
+      try {
+        const user = this.users.find(user => user.id === userId);
+        if (user && !user.conferences.includes(conferenceId)) {
+          user.conferences.push(conferenceId);
+        }
+      } catch (error) {
+        console.error('Error adding conference to user:', error);
       }
     },
     addTicketToUser(userId, ticketName) {
-      const user = this.users.find(user => user.id === userId);
-      if (user) {
-        user.ticket = ticketName;
+      try {
+        const user = this.users.find(user => user.id === userId);
+        if (user) {
+          user.ticket = ticketName;
+        }
+      } catch (error) {
+        console.error('Error adding ticket to user:', error);
       }
     }
   },
@@ -77,7 +101,9 @@ export const useUsersStore = defineStore('users', {
     getUserById: (state) => (id) => {
       return state.users.find(user => user.id === id);
     },
-    getVolunteers: (state) => state.users.filter((user) => user.role === "voluntary"),
+    getVolunteers: (state) => {
+      return state.users.filter((user) => user.role === "voluntary");
+    },
   },
   persist: {
     enabled: true,

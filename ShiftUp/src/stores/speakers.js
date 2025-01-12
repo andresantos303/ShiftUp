@@ -56,7 +56,7 @@ export const useSpeakersStore = defineStore("speakers", {
         const speaker = this.speakers.find((t) => t.id === speakerId);
         if (speaker) {
           speaker.conferences.push(conferenceId);
-          conferencesStore.addConferenceTospeaker(conferenceId,speakerId)
+          conferencesStore.addConferenceTospeaker(conferenceId,speakerId);
           await api.put(API_BASE_URL, `speakers/${speakerId}`, speaker);
         }
       } catch (error) {
@@ -67,6 +67,10 @@ export const useSpeakersStore = defineStore("speakers", {
   getters: {
     getSpeakerById: (state) => (id) => {
       return state.speakers.find((speaker) => speaker.id === id.toString());
-    },    
+    },
+    // NOVO GETTER PARA FACILITAR O CÁLCULO DO TOTAL DE SPEAKERS
+    totalSpeakers: (state) => {
+      return state.speakers.length;
+    },
   },
 });

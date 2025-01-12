@@ -14,9 +14,9 @@
               <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
             </svg>
           </button>
-          <a href="#" class="flex ms-2 md:me-24">
-            <img src="/public/images/LogoA.png" class="h-8 me-3" alt="Logo Admin" /> <!-- aqui tem que ir para admin view -->
-          </a>
+          <RouterLink :to="`/admin/dashboard`" class="flex ms-2 md:me-24">
+            <img src="/public/images/LogoA.png" class="h-8 me-3" alt="Logo Admin" />
+          </RouterLink>
         </div>
 
         <!-- User Menu -->
@@ -34,14 +34,6 @@
               class="absolute right-0 top-full mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg"
             >
               <ul class="py-2">
-                <li>
-                  <button
-                    @click="profile"
-                    class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
-                  >
-                    Profile
-                  </button>
-                </li>
                 <li>
                   <button
                     @click="logout()"
@@ -66,12 +58,14 @@
   >
     <div class="h-full px-3 pb-4 overflow-y-auto">
       <ul class="space-y-2 font-medium">
-        <li><RouterLink :to="`/admin/${id}/participants`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Participants</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/orders`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Orders</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/products`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Products</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/volunteers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Volunteers</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/speakers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Speakers</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/communication`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Communication</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/participants`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Participants</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/conferences`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Conferences</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/tickets`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Tickets</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/orders`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Orders</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/products`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Products</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/volunteers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Volunteers</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/speakers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Speakers</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/communication`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Communication</RouterLink></li>
       </ul>
     </div>
   </aside>
@@ -107,11 +101,7 @@ export default {
       router.push("/")
     };
 
-    const profile = () => {
-      console.log("User profile");
-    };
-
-    return { id, sidebarOpen, dropdownOpen, toggleSidebar, toggleDropdown, logout, profile };
+    return { id, sidebarOpen, dropdownOpen, toggleSidebar, toggleDropdown, logout };
   },
 };
 </script>

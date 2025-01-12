@@ -14,14 +14,18 @@
                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
             </svg>
           </div>
-          <input type="text" id="table-search-products"
+          <input
+            v-model="searchQuery"
+            type="text"
+            id="table-search-products"
             class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Search for products" />
+            placeholder="Search for products"
+          />
         </div>
       </div>
 
       <!-- BaseTable Component -->
-      <BaseTable :columns="columns" :rows="products" />
+      <BaseTable :columns="columns" :rows="filteredProducts" />
 
       <button @click="openModal"
         class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mt-5 m-4"
@@ -38,7 +42,7 @@ import HeaderA from "@/components/HeaderA.vue";
 import BaseTable from "@/components/ui/baseTable.vue";
 import Modal from "@/components/ui/Modal.vue";
 import { useProductsStore } from "@/stores/products";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 
 export default {
   components: {
@@ -49,7 +53,9 @@ export default {
   setup() {
     const productsStore = useProductsStore();
     const modalOpen = ref(false); // Controla a visibilidade do modal
+    const searchQuery = ref(""); // Controla o campo de busca
 
+    // Computed para buscar produtos da store
     const products = computed(() =>
       productsStore.products.map((product) => ({
         id: product.id,
@@ -57,10 +63,25 @@ export default {
         price: `${product.price}€`,
         category: product.category,
         purchased: product.purchased,
-        image: product.image, // Mostrando a imagem do produto
+        image: product.image,
         action: "Edit",
       }))
     );
+
+    // Computed para filtrar produtos com base na busca
+    const filteredProducts = computed(() => {
+      if (!searchQuery.value) return products.value;
+      return products.value.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+      );
+    });
+
+    // Carrega os dados da store ao montar o componente
+    onMounted(async () => {
+      if (!productsStore.products.length) {
+        await productsStore.fetchProducts();
+      }
+    });
 
     const openModal = () => {
       modalOpen.value = true;
@@ -70,11 +91,15 @@ export default {
       modalOpen.value = false;
     };
 
-    const addProduct = (newProduct) => {
+    const addProduct = async (newProduct) => {
       if (newProduct.name && newProduct.price && newProduct.category && newProduct.purchased && newProduct.image) {
-        // Adiciona o produto à store, incluindo a imagem
-        productsStore.addProduct(newProduct);
+        try {
+          await productsStore.addProduct(newProduct); // Adiciona o produto na store
+        } catch (error) {
+          console.error("Erro ao adicionar produto:", error);
+        }
       }
+      closeModal(); // Fecha o modal após adicionar
     };
 
     return {
@@ -84,10 +109,12 @@ export default {
         { label: "Price", field: "price" },
         { label: "Category", field: "category" },
         { label: "Purchased", field: "purchased" },
-        { label: "Image", field: "image" },  // Exibir imagem na tabela
+        { label: "Image", field: "image" },
         { label: "Action", field: "action" },
       ],
       products,
+      filteredProducts,
+      searchQuery,
       modalOpen,
       openModal,
       closeModal,

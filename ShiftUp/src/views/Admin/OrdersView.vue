@@ -24,44 +24,102 @@
             </svg>
           </div>
           <input
+            v-model="searchQuery"
             type="text"
-            id="table-search-products"
+            id="table-search-orders"
             class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Search for products"
+            placeholder="Search for orders"
           />
         </div>
+        <!-- Add Order Button -->
+        <button
+          @click="openModal"
+          class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mt-5 m-4"
+        >
+          Add Order
+        </button>
       </div>
 
       <!-- BaseTable Component -->
-      <BaseTable :columns="columns" :rows="products" />
+      <BaseTable :columns="columns" :rows="filteredOrders" />
     </div>
   </main>
+
+  <!-- Modal Component for Adding Order -->
+  <Modal :isOpen="modalOpen" :onClose="closeModal" :onSave="addOrder" />
 </template>
 
 <script>
 import HeaderA from "@/components/HeaderA.vue";
 import BaseTable from "@/components/ui/baseTable.vue";
+import Modal from "@/components/ui/Modal.vue";
 import { useOrdersStore } from "@/stores/orders";
-import { computed } from "vue";
+import { computed, ref, onMounted } from "vue";
 
 export default {
   components: {
     HeaderA,
     BaseTable,
+    Modal,
   },
   setup() {
     const ordersStore = useOrdersStore();
+    const modalOpen = ref(false);
+    const searchQuery = ref("");
 
+    // Computed para pegar os pedidos da store
     const orders = computed(() =>
-    ordersStore.orders.map((order) => ({
+      ordersStore.orders.map((order) => ({
         id: order.id,
         name: order.product.name,
         userId: order.user.id,
         quantity: order.quantity,
         totalPrice: order.totalPrice,
-        action: "Edit", 
+        action: "Edit",
       }))
     );
+
+    // Computed para filtrar pedidos com base na busca
+    const filteredOrders = computed(() => {
+      if (!searchQuery.value) return orders.value;
+      return orders.value.filter((order) =>
+        order.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+      );
+    });
+
+    // Carregar os dados da store ao montar o componente
+    onMounted(async () => {
+      if (!ordersStore.orders.length) {
+        await ordersStore.fetchOrders();
+      }
+    });
+
+    // Função para abrir o modal
+    const openModal = () => {
+      modalOpen.value = true;
+    };
+
+    // Função para fechar o modal
+    const closeModal = () => {
+      modalOpen.value = false;
+    };
+
+    // Função para adicionar um novo pedido
+    const addOrder = async (newOrder) => {
+      if (newOrder.productName && newOrder.userId && newOrder.quantity) {
+        try {
+          await ordersStore.addOrder({
+            product: { name: newOrder.productName },
+            user: { id: newOrder.userId },
+            quantity: newOrder.quantity,
+            totalPrice: newOrder.totalPrice,
+          });
+        } catch (error) {
+          console.error("Erro ao adicionar pedido:", error);
+        }
+      }
+      closeModal();
+    };
 
     return {
       columns: [
@@ -73,6 +131,12 @@ export default {
         { label: "Action", field: "action" },
       ],
       orders,
+      filteredOrders,
+      searchQuery,
+      modalOpen,
+      openModal,
+      closeModal,
+      addOrder,
     };
   },
 };

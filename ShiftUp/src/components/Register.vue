@@ -126,7 +126,7 @@
           accountType: this.accountType,
         };
   
-        usersStore.addUser(newUser); // Assuming you have a store method to add a user
+        usersStore.addUser(newUser);
         alert("Account created successfully!");
         this.$router.push("/login");
       },

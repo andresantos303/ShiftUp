@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 import { useUsersStore } from './users';
 
-
 export const useTicketsStore = defineStore('ticket', {
   state: () => ({
     tickets: [
@@ -33,32 +32,45 @@ export const useTicketsStore = defineStore('ticket', {
   }),
   actions: {
     addItem(item) {
-      this.tickets.push(item);
-    },
-    removeItem(id) {
-      this.tickets = this.tickets.filter(item => item.id !== id);
-    },
-    updateItem(updatedTicket) {
-      const index = this.tickets.findIndex(item => item.id === updatedTicket.id);
-      if (index !== -1) {
-        this.tickets[index] = { ...this.tickets[index], ...updatedTicket };
+      try {
+        this.tickets.push(item);
+      } catch (error) {
+        console.error('Error adding item:', error);
       }
     },
-    purchaseTicket({ ticketName, userId }) {
-      const usersStore = useUsersStore();
-      const ticket = this.tickets.find(item => item.name === ticketName);
-      if (ticket && !ticket.purchased.includes(userId)) {
-        ticket.purchased.push(userId);
-        usersStore.addTicketToUser(userId,ticketName);
+    removeItem(id) {
+      try {
+        this.tickets = this.tickets.filter(item => item.id !== id);
+      } catch (error) {
+        console.error('Error removing item:', error);
+      }
+    },
+    updateItem(updatedTicket) {
+      try {
+        const index = this.tickets.findIndex(item => item.id === updatedTicket.id);
+        if (index !== -1) {
+          this.tickets[index] = { ...this.tickets[index], ...updatedTicket };
+        }
+      } catch (error) {
+        console.error('Error updating item:', error);
+      }
+    },
+    purchaseTicket(ticketName, userId) {
+      try {
+        const usersStore = useUsersStore();
+        const ticket = this.tickets.find(item => item.name === ticketName);
+        if (ticket && !ticket.purchased.includes(userId)) {
+          ticket.purchased.push(userId);
+          usersStore.addTicketToUser(userId, ticketName);
+        }
+      } catch (error) {
+        console.error('Error purchasing ticket:', error);
       }
     }
   },
   getters: {
-    purchasersCount: (state) => {
-      return (ticketId) => {
-        const ticket = state.tickets.find(item => item.id === ticketId);
-        return ticket ? ticket.purchased.length : 0;
-      };
+    totalTicketsPurchased: (state) => {
+      return state.tickets.reduce((acc, ticket) => acc + ticket.purchased.length, 0);
     }
   },
   persist: {

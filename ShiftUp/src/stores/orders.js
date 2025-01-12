@@ -7,30 +7,38 @@ export const useOrdersStore = defineStore('orders', {
   }),
   actions: {
     addOrder(order) {
-      const productsStore = useProductsStore();
+      try {
+        const productsStore = useProductsStore();
 
-      // Verifica se o produto existe na Products Store
-      const product = productsStore.getProductById(order.productId);
+        // Verifica se o produto existe na Products Store
+        const product = productsStore.getProductById(order.productId);
 
-      if (product) {
-        // Incrementa o nº de vezes que o produto foi comprado
-        productsStore.incrementPurchased(order.productId);
+        if (product) {
+          // Incrementa o nº de vezes que o produto foi comprado
+          productsStore.incrementPurchased(order.productId);
 
-        // Adiciona o pedido ao array de orders
-        this.orders.push({
-          id: Date.now(),
-          productId: order.productId,
-          userId: order.userId,
-          quantity: order.quantity,
-          totalPrice: product.price * order.quantity,
-          date: new Date().toLocaleString(),
-        });
-      } else {
-        console.error("Product not found!");
+          // Adiciona o pedido ao array de orders
+          this.orders.push({
+            id: Date.now(),
+            productId: order.productId,
+            userId: order.userId,
+            quantity: order.quantity,
+            totalPrice: product.price * order.quantity,
+            date: new Date().toLocaleString(),
+          });
+        } else {
+          console.error("Product not found!");
+        }
+      } catch (error) {
+        console.error('Error adding order:', error);
       }
     },
     removeOrder(orderId) {
-      this.orders = this.orders.filter(order => order.id !== orderId);
+      try {
+        this.orders = this.orders.filter(order => order.id !== orderId);
+      } catch (error) {
+        console.error('Error removing order:', error);
+      }
     },
   },
   getters: {
@@ -41,14 +49,19 @@ export const useOrdersStore = defineStore('orders', {
       return state.orders.reduce((total, order) => total + order.totalPrice, 0);
     },
     getOrderDetails: (state) => {
-      const productsStore = useProductsStore();
-      return state.orders.map(order => {
-        const product = productsStore.getProductById(order.productId);
-        return {
-          ...order,
-          productName: product ? product.name : "Unknown Product",
-        };
-      });
+      try {
+        const productsStore = useProductsStore();
+        return state.orders.map(order => {
+          const product = productsStore.getProductById(order.productId);
+          return {
+            ...order,
+            productName: product ? product.name : "Unknown Product",
+          };
+        });
+      } catch (error) {
+        console.error('Error fetching order details:', error);
+        return [];
+      }
     },
   },
   persist: {
