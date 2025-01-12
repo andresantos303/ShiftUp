@@ -8,14 +8,15 @@
             @click="toggleSidebar"
             type="button"
             class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-            aria-controls="logo-sidebar">
+            aria-controls="logo-sidebar"
+          >
             <span class="sr-only">Open sidebar</span>
             <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
             </svg>
           </button>
-          <a href="#" class="flex ms-2 md:me-24">
-            <img src="/public/images/LogoA.png" class="h-8 me-3" alt="Logo Admin" /> <!-- aqui tem que ir para admin view -->
+          <a href="/admin/:id" class="flex ms-2 md:me-24">
+            <img src="/public/images/LogoA.png" class="h-8 me-3" alt="Logo Admin" />
           </a>
         </div>
 
@@ -44,7 +45,7 @@
                 </li>
                 <li>
                   <button
-                    @click="logout()"
+                    @click="logout"
                     class="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
                   >
                     Log Out
@@ -66,13 +67,69 @@
   >
     <div class="h-full px-3 pb-4 overflow-y-auto">
       <ul class="space-y-2 font-medium">
-        <li><RouterLink :to="`/admin/${id}/participants`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Participants</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/orders`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Orders</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/products`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Products</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/volunteers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Volunteers</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/speakers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Speakers</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/communication`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Communication</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/itenerary`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Itenerary</RouterLink></li>
+        <li>
+          <RouterLink
+            :to="`/admin/${id}/participants`"
+            :class="isActive(`/admin/${id}/participants`) ? 'bg-custom-gradient text-white' : 'text-gray-700 hover:bg-custom-gradient hover:text-white'"
+            class="nav-link block px-6 py-2.5"
+          >
+            Participants
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink
+            :to="`/admin/${id}/orders`"
+            :class="isActive(`/admin/${id}/orders`) ? 'bg-custom-gradient text-white' : 'text-gray-700 hover:bg-custom-gradient hover:text-white'"
+            class="nav-link block px-6 py-2.5"
+          >
+            Orders
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink
+            :to="`/admin/${id}/products`"
+            :class="isActive(`/admin/${id}/products`) ? 'bg-custom-gradient text-white' : 'text-gray-700 hover:bg-custom-gradient hover:text-white'"
+            class="nav-link block px-6 py-2.5"
+          >
+            Products
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink
+            :to="`/admin/${id}/volunteers`"
+            :class="isActive(`/admin/${id}/volunteers`) ? 'bg-custom-gradient text-white' : 'text-gray-700 hover:bg-custom-gradient hover:text-white'"
+            class="nav-link block px-6 py-2.5"
+          >
+            Volunteers
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink
+            :to="`/admin/${id}/speakers`"
+            :class="isActive(`/admin/${id}/speakers`) ? 'bg-custom-gradient text-white' : 'text-gray-700 hover:bg-custom-gradient hover:text-white'"
+            class="nav-link block px-6 py-2.5"
+          >
+            Speakers
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink
+            :to="`/admin/${id}/communication`"
+            :class="isActive(`/admin/${id}/communication`) ? 'bg-custom-gradient text-white' : 'text-gray-700 hover:bg-custom-gradient hover:text-white'"
+            class="nav-link block px-6 py-2.5"
+          >
+            Communication
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink
+            :to="`/admin/${id}/itenerary`"
+            :class="isActive(`/admin/${id}/itenerary`) ? 'bg-custom-gradient text-white' : 'text-gray-700 hover:bg-custom-gradient hover:text-white'"
+            class="nav-link block px-6 py-2.5"
+          >
+            Itenerary
+          </RouterLink>
+        </li>
       </ul>
     </div>
   </aside>
@@ -84,8 +141,8 @@
 
 <script>
 import { RouterLink, useRoute } from "vue-router";
-import router from '@/router';
 import { ref } from "vue";
+import router from '@/router';
 
 export default {
   setup() {
@@ -103,16 +160,18 @@ export default {
     };
 
     const logout = () => {
-      localStorage.removeItem("isAuthenticated")
-      localStorage.removeItem("user")
-      router.push("/")
+      localStorage.removeItem("isAuthenticated");
+      localStorage.removeItem("user");
+      router.push("/");
     };
 
     const profile = () => {
       console.log("User profile");
     };
 
-    return { id, sidebarOpen, dropdownOpen, toggleSidebar, toggleDropdown, logout, profile };
+    const isActive = (path) => route.path === path;
+
+    return { id, sidebarOpen, dropdownOpen, toggleSidebar, toggleDropdown, logout, profile, isActive };
   },
 };
 </script>

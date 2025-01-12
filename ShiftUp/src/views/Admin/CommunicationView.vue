@@ -43,8 +43,6 @@
           <Button 
             label="Send Notification" 
             to="#" 
-            :bgColor="'bg-custom-gradient'" 
-            :textColor="'text-white'" 
             additionalClasses="w-full py-3"
             @click.native="sendNotification" />
         </form>

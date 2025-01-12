@@ -57,7 +57,7 @@
         <!-- Create Account Link -->
         <p class="text-sm text-gray-600 text-center">
           Don't have an account yet?
-          <router-link to="/register" class="text-indigo-600 cursor-pointer">
+          <router-link to="/tickets" class="text-indigo-600 cursor-pointer">
             <b>Create Account</b>
           </router-link>
         </p>
@@ -104,7 +104,7 @@ export default {
         localStorage.setItem("user", JSON.stringify({ id: user.id, role: user.role }));
 
         if (user.role === "admin") {
-          router.push("/admin/dashboard");
+          router.push("/admin/:id/participants");
         } else if (user.role === "participant") {
           router.push(`/participante/${user.id}/profile`);
         }

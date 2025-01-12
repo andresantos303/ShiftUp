@@ -64,6 +64,11 @@
                     class="focus:ring-indigo-500 focus:ring-2 text-indigo-600 border-gray-300">
                   <span class="ml-2 text-sm text-gray-700">Student</span>
                 </label>
+                <label class="flex items-center">
+                  <input type="radio" value="Volunteer" v-model="accountType" required
+                    class="focus:ring-indigo-500 focus:ring-2 text-indigo-600 border-gray-300">
+                  <span class="ml-2 text-sm text-gray-700">Volunteer</span>
+                </label>
               </div>
             </div>
   
