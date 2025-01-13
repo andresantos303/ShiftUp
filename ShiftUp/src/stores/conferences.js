@@ -13,6 +13,17 @@ export const useConferencesStore = defineStore('conferences', {
         date: "November 11",
         time: "6.00PM - 6.20PM",
         participants: []
+      },
+      {
+        id: 2,
+        title: "Welcome to Shift Up xxx",
+        speakers: ["Joana"],
+        description: "An exciting introduction to the Shift Up event, highlighting the schedule, speakers, and goals for the conference. Join us to kick off this inspiring journey together!",
+        local: "Centre Stage MEO Arena",
+        category: "Main Stage",
+        date: "November 13",
+        time: "6.00PM - 6.20PM",
+        participants: []
       }
     ],
   }),

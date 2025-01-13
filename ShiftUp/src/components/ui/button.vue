@@ -1,7 +1,7 @@
 <template>
-    <RouterLink :to="to" :class="buttonClasses" class="inline-flex items-center justify-center rounded-full px-8 py-3">
+    <button :class="buttonClasses" class="inline-flex items-center justify-center rounded-full px-8 py-3" @click="handleClick">
         <span :class="textClasses">{{ label }}</span>
-    </RouterLink>
+    </button>
 </template>
 
 <script>
@@ -9,10 +9,6 @@ export default {
     name: "Button",
     props: {
         label: {
-            type: String,
-            required: true,
-        },
-        to: {
             type: String,
             required: true,
         },
@@ -24,15 +20,17 @@ export default {
             type: String,
             default: "text-white",
         },
-        // Permite ajustar o tamanho do texto
         textSize: {
             type: String,
             default: "text-base",
         },
-        // Permite a personalização do texto de forma mais específica
         additionalClasses: {
             type: String,
             default: "",
+        },
+        onClick: {
+            type: Function,
+            default: null,
         },
     },
     computed: {
@@ -43,8 +41,10 @@ export default {
             return `${this.textColor} ${this.textSize}`;
         },
     },
+    methods: {
+        handleClick() {
+            if (this.onClick) this.onClick();
+        },
+    },
 };
 </script>
-
-<style scoped>
-</style>

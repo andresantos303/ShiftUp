@@ -115,7 +115,7 @@
         <!-- Create Account Link -->
         <p class="text-sm text-gray-600 text-center">
           Don't have an account yet?
-          <router-link to="/register" class="text-indigo-600 cursor-pointer">
+          <router-link to="/tickets" class="text-indigo-600 cursor-pointer">
             <b>Create Account</b>
           </router-link>
         </p>
