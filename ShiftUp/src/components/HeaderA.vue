@@ -59,13 +59,13 @@
   >
     <div class="h-full px-3 pb-4 overflow-y-auto">
       <ul class="space-y-2 font-medium">
-        <li><RouterLink :to="`/admin/${id}/participants`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Participants</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/orders`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Orders</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/products`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Products</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/volunteers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Volunteers</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/speakers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Speakers</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/communication`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Communication</RouterLink></li>
-        <li><RouterLink :to="`/admin/${id}/itenerary`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Itenerary</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/participants`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Participants</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/orders`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Orders</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/products`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Products</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/volunteers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Volunteers</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/speakers`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Speakers</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/communication`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Communication</RouterLink></li>
+        <li><RouterLink :to="`/admin/dashboard/itenerary`" class="nav-link block px-6 py-2.5 text-gray-700 hover:bg-custom-gradient hover:text-white">Itenerary</RouterLink></li>
       </ul>
     </div>
   </aside>
