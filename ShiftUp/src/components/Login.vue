@@ -161,19 +161,13 @@ export default {
       );
 
       if (user) {
-        console.log(user)
         localStorage.setItem("isAuthenticated", true);
         localStorage.setItem("user", JSON.stringify({ id: user.id, role: user.role }));
 
         if (user.role === "admin") {
           router.push("/admin/dashboard");
         } else if (user.role === "participant" || user.role === "voluntary") {
-          if(user.ticket == null){
-            alert("Need to by a ticket before enter the participants page");
-            router.push("/tickets");
-          }else{
-            router.push(`/participante/${user.id}/profile`);
-          }
+          router.push("/");
         }
       } else {
         alert("Invalid email or password");

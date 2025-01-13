@@ -8,8 +8,11 @@
 
       <!-- Actions and Hamburger Button -->
       <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-        <RouterLink to="/login" class="hidden md:block text-white text-base px-8 py-3">
-          Log In
+        <RouterLink v-if="auth" to="/login" class="hidden md:block text-white text-base px-8 py-3">
+          Dashboard
+        </RouterLink>
+        <RouterLink v-else to="/login" class="hidden md:block text-white text-base px-8 py-3">
+          Log in
         </RouterLink>
         <RouterLink to="/tickets" class="hidden md:block  bg-custom-gradient text-white text-base px-8 py-3 rounded-full">
           Buy Ticket
@@ -54,6 +57,7 @@ export default {
   data() {
     return {
       isMenuOpen: false,
+      auth: localStorage.getItem("isAuthenticated")
     };
   },
   methods: {
