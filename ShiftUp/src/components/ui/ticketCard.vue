@@ -64,9 +64,8 @@ export default {
         if (user && user.id) {
           const ticketsStore = useTicketsStore();
           ticketsStore.purchaseTicket(ticketName, user.id);
-          console.log(ticketsStore.tickets)
           alert("Ticket purchased successfully!");
-          router.push(`/participante/${user.id}/profile`);
+          router.push("/");
         } else {
           console.error("User data is missing from localStorage.");
         }
