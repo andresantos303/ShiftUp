@@ -14,7 +14,7 @@ export default {
     const buyProduct = (productId, quantity = 1) => {
       ordersStore.addOrder({
         productId,
-        userId: 1, // Substitua com o ID do usuário logado
+        userId: 1, // Substitua com o ID do user logado
         quantity,
       });
       alert("Product added to your orders!");

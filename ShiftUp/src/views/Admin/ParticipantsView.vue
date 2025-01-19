@@ -56,7 +56,7 @@
     </div>
   </main>
 
-  <!-- Modal para criar ou editar usuário -->
+  <!-- Modal para criar ou editar user -->
   <Modal
     :isOpen="modalOpen"
     :onClose="closeModal"
@@ -90,7 +90,7 @@ export default {
     // Controle da pesquisa
     const searchQuery = ref("");
 
-    // Computed para lista de usuários formatada
+    // Computed para lista de users formatada
     const users = computed(() =>
       usersStore.users.map((user) => ({
         id: user.id,
@@ -112,7 +112,7 @@ export default {
       );
     });
 
-    // Carregar usuários ao montar
+    // Carregar users ao montar
     onMounted(async () => {
       if (!usersStore.users.length) {
         await usersStore.fetchUsers();
@@ -131,14 +131,14 @@ export default {
       modalOpen.value = false;
     };
 
-    // Salvar usuário (tanto create quanto edit)
+    // Salvar user (tanto create quanto edit)
     const saveUser = async (userData) => {
       try {
         if (modalMode.value === "create") {
-          // Criando novo usuário
+          // Criando novo user
           await usersStore.addUser(userData);
         } else {
-          // Editando usuário existente
+          // Editando user existente
           await usersStore.updateUser(userData);
         }
       } catch (error) {
@@ -147,14 +147,14 @@ export default {
       closeModal();
     };
 
-    // Editar usuário (acionado pelo botão Edit na tabela)
+    // Editar user (acionado pelo botão Edit na tabela)
     const handleEditUser = (row) => {
       selectedUser.value = { ...row }; // faz uma cópia para edição
       modalMode.value = "edit";
       modalOpen.value = true;
     };
 
-    // Excluir usuário (acionado pelo botão Delete na tabela)
+    // Excluir user (acionado pelo botão Delete na tabela)
     const handleDeleteUser = async (row) => {
       try {
         // Exemplo de confirmação

@@ -53,7 +53,7 @@
           <input
             id="age"
             v-model="formData.age"
-            type="number"
+            type="text"
             class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder="Enter user age"
             required
@@ -113,7 +113,7 @@ export default {
       type: Function,
       required: true,
     },
-    user: {        // usuário a editar, se for o caso
+    user: {        // user a editar, se for o caso
       type: Object,
       default: null,
     },
@@ -136,7 +136,7 @@ export default {
   },
   watch: {
     // Sempre que a prop `user` mudar (ou no load inicial com immediate: true),
-    // atualizamos o formData para exibir os dados do usuário
+    // atualizamos o formData para exibir os dados do user
     user: {
       immediate: true,
       handler(newUser) {
