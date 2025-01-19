@@ -1,17 +1,30 @@
 <template>
   <HeaderA />
+
   <!-- Page Content -->
-  <main :class="{ 'ml-64': sidebarOpen, 'ml-0': !sidebarOpen }"
-    class="flex-1 flex items-center justify-center mt-12 transition-all duration-300">
+  <main
+    :class="{ 'ml-64': sidebarOpen, 'ml-0': !sidebarOpen }"
+    class="flex-1 flex items-center justify-center mt-12 transition-all duration-300"
+  >
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full mx-6 sm:ml-72 mr-12">
       <div class="flex items-center justify-between flex-col md:flex-row space-y-4 md:space-y-0 pb-4 bg-white">
         <!-- Search Input -->
         <div class="relative">
-          <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 20 20">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg
+              class="w-4 h-4 text-gray-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
             </svg>
           </div>
           <input
@@ -22,25 +35,41 @@
             placeholder="Search for products"
           />
         </div>
+
+        <!-- Botão para criar novo Produto -->
+        <button
+          @click="openCreateModal"
+          class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mt-5 m-4"
+          role="button"
+        >
+          New Product
+        </button>
       </div>
 
-      <!-- BaseTable Component -->
-      <BaseTable :columns="columns" :rows="filteredProducts" />
-
-      <button @click="openModal"
-        class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mt-5 m-4"
-        role="button">New Product</button>
+      <!-- Tabela de Produtos -->
+      <BaseTable
+        :columns="columns"
+        :rows="filteredProducts"
+        @editItem="handleEditProduct"
+        @deleteItem="handleDeleteProduct"
+      />
     </div>
   </main>
 
-  <!-- Modal Component -->
-  <Modal :isOpen="modalOpen" :onClose="closeModal" :onSave="addProduct" />
+  <!-- Modal de Criar/Editar Produto -->
+  <Modal
+    :isOpen="modalOpen"
+    :onClose="closeModal"
+    :onSave="saveProduct"
+    :product="selectedProduct"
+    :mode="modalMode"
+  />
 </template>
 
 <script>
 import HeaderA from "@/components/HeaderA.vue";
 import BaseTable from "@/components/ui/baseTable.vue";
-import Modal from "@/components/ui/Modal.vue";
+import Modal from "@/components/ui/ProductModal.vue"; // Certifique-se do caminho correto
 import { useProductsStore } from "@/stores/products";
 import { computed, ref, onMounted } from "vue";
 
@@ -48,14 +77,27 @@ export default {
   components: {
     HeaderA,
     BaseTable,
-    Modal, // Registrando o componente Modal
+    Modal,
   },
   setup() {
     const productsStore = useProductsStore();
-    const modalOpen = ref(false); // Controla a visibilidade do modal
-    const searchQuery = ref(""); // Controla o campo de busca
 
-    // Computed para buscar produtos da store
+    // Controla o estado do modal
+    const modalOpen = ref(false);
+    const modalMode = ref("create"); // "create" ou "edit"
+    const selectedProduct = ref(null);
+
+    // Controle da pesquisa
+    const searchQuery = ref("");
+
+    // Carrega os produtos da store ao montar
+    onMounted(async () => {
+      if (!productsStore.products.length) {
+        await productsStore.fetchProducts();
+      }
+    });
+
+    // Lista de produtos formatada para a tabela
     const products = computed(() =>
       productsStore.products.map((product) => ({
         id: product.id,
@@ -64,11 +106,11 @@ export default {
         category: product.category,
         purchased: product.purchased,
         image: product.image,
-        action: "Edit",
+        action: "",
       }))
     );
 
-    // Computed para filtrar produtos com base na busca
+    // Filtro para a busca
     const filteredProducts = computed(() => {
       if (!searchQuery.value) return products.value;
       return products.value.filter((product) =>
@@ -76,49 +118,81 @@ export default {
       );
     });
 
-    // Carrega os dados da store ao montar o componente
-    onMounted(async () => {
-      if (!productsStore.products.length) {
-        await productsStore.fetchProducts();
-      }
-    });
+    // Colunas da tabela
+    const columns = [
+      { label: "ID", field: "id" },
+      { label: "Name", field: "name" },
+      { label: "Price", field: "price" },
+      { label: "Category", field: "category" },
+      { label: "Purchased", field: "purchased" },
+      { label: "Image", field: "image" },
+      { label: "Action", field: "action" },
+    ];
 
-    const openModal = () => {
+    // Abre modal para CRIAR
+    const openCreateModal = () => {
+      selectedProduct.value = null; // sem produto selecionado
+      modalMode.value = "create";
       modalOpen.value = true;
     };
 
+    // Fecha modal
     const closeModal = () => {
       modalOpen.value = false;
     };
 
-    const addProduct = async (newProduct) => {
-      if (newProduct.name && newProduct.price && newProduct.category && newProduct.purchased && newProduct.image) {
-        try {
-          await productsStore.addProduct(newProduct); // Adiciona o produto na store
-        } catch (error) {
-          console.error("Erro ao adicionar produto:", error);
+    // Salva produto (criar ou editar)
+    const saveProduct = async (productData) => {
+      try {
+        if (modalMode.value === "create") {
+          // Criar novo produto
+          await productsStore.addProduct(productData);
+        } else {
+          // Editar produto existente
+          await productsStore.updateProduct(productData);
         }
+      } catch (error) {
+        console.error("Erro ao salvar produto:", error);
       }
-      closeModal(); // Fecha o modal após adicionar
+      closeModal();
+    };
+
+    // Quando clicamos no botão Edit
+    const handleEditProduct = (row) => {
+      // Localiza o produto completo na store (caso queira mais dados)
+      const productFromStore = productsStore.products.find(
+        (p) => p.id === row.id
+      );
+      selectedProduct.value = { ...productFromStore }; // copia
+      modalMode.value = "edit";
+      modalOpen.value = true;
+    };
+
+    // Quando clicamos no botão Delete
+    const handleDeleteProduct = async (row) => {
+      try {
+        if (confirm(`Are you sure you want to delete: ${row.name}?`)) {
+          await productsStore.removeProduct(row.id);
+        }
+      } catch (error) {
+        console.error("Erro ao excluir produto:", error);
+      }
     };
 
     return {
-      columns: [
-        { label: "ID", field: "id" },
-        { label: "Name", field: "name" },
-        { label: "Price", field: "price" },
-        { label: "Category", field: "category" },
-        { label: "Purchased", field: "purchased" },
-        { label: "Image", field: "image" },
-        { label: "Action", field: "action" },
-      ],
+      sidebarOpen: false,
+      columns,
       products,
       filteredProducts,
       searchQuery,
       modalOpen,
-      openModal,
+      modalMode,
+      selectedProduct,
+      openCreateModal,
       closeModal,
-      addProduct,
+      saveProduct,
+      handleEditProduct,
+      handleDeleteProduct,
     };
   },
 };

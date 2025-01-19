@@ -62,7 +62,7 @@
   import { useConferencesStore } from "@/stores/conferences";
   import HeaderA from "@/components/HeaderA.vue";
   import BaseTable from "@/components/ui/baseTable.vue";
-  import Modal from "@/components/ui/Modal.vue";
+  import Modal from "@/components/ui/ProductModal.vue";
   
   // Sidebar de exemplo (se estiver usando no layout)
   const sidebarOpen = ref(false);

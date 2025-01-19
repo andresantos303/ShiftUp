@@ -8,9 +8,7 @@ export const useUsersStore = defineStore('users', {
         name: "André Santos",
         email: "andrecostasantos2003@gmail.com",
         password: "And123",
-        age: "",
-        job: "",
-        picture: "/public/images/profile-icon.png",
+        age: "20",
         role: "admin",
         conferences: [],
         ticket: null
@@ -20,9 +18,7 @@ export const useUsersStore = defineStore('users', {
         name: "André Costa",
         email: "jehetrolha33@gmail.com",
         password: "And123",
-        age: "",
-        job: "",
-        picture: "/public/images/profile-icon.png",
+        age: "20",
         role: "participant",
         conferences: [], 
         ticket: null
@@ -33,8 +29,6 @@ export const useUsersStore = defineStore('users', {
         email: "littlejohn@gmail.com",
         password: "And123",
         age: "25",
-        job: "Constructor",
-        picture: "",
         role: "voluntary",
         conferences: [], 
         ticket: null

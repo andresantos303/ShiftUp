@@ -31,13 +31,6 @@
             placeholder="Search for users"
           />
         </div>
-        <!-- Add User Button -->
-        <button
-          @click="openModal"
-          class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mt-5 m-4"
-        >
-          Add User
-        </button>
       </div>
 
       <!-- BaseTable Component -->
@@ -45,15 +38,11 @@
 
     </div>
   </main>
-
-  <!-- Modal Component -->
-  <Modal :isOpen="modalOpen" :onClose="closeModal" :onSave="addUser" />
 </template>
 
 <script>
 import HeaderA from "@/components/HeaderA.vue";
 import BaseTable from "@/components/ui/baseTable.vue";
-import Modal from "@/components/ui/Modal.vue";
 import { useUsersStore } from "@/stores/users";
 import { computed, ref, onMounted } from "vue";
 
@@ -61,11 +50,9 @@ export default {
   components: {
     HeaderA,
     BaseTable,
-    Modal,
   },
   setup() {
     const usersStore = useUsersStore();
-    const modalOpen = ref(false); // Controla a visibilidade do modal
     const searchQuery = ref(""); // Campo de busca
 
     // Computed para pegar os usuários voluntários da store
@@ -76,7 +63,7 @@ export default {
         email: user.email,
         role: user.role,
         ticket: user.ticket || "No Ticket",
-        action: "Edit",
+        action: "",
       }))
     );
 
@@ -95,28 +82,6 @@ export default {
       }
     });
 
-    // Função para abrir o modal
-    const openModal = () => {
-      modalOpen.value = true;
-    };
-
-    // Função para fechar o modal
-    const closeModal = () => {
-      modalOpen.value = false;
-    };
-
-    // Função para adicionar um novo usuário
-    const addUser = async (newUser) => {
-      if (newUser.name && newUser.email && newUser.role) {
-        try {
-          await usersStore.addUser(newUser); // Adiciona o usuário à store
-        } catch (error) {
-          console.error("Erro ao adicionar usuário:", error);
-        }
-      }
-      closeModal(); // Fecha o modal após adicionar
-    };
-
     return {
       columns: [
         { label: "ID", field: "id" },
@@ -128,10 +93,6 @@ export default {
       ],
       filteredUsers,
       searchQuery,
-      modalOpen,
-      openModal,
-      closeModal,
-      addUser,
     };
   },
 };

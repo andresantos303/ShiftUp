@@ -1,17 +1,31 @@
 <template>
   <HeaderA />
   <!-- Page Content -->
-  <main :class="{ 'ml-64': sidebarOpen, 'ml-0': !sidebarOpen }"
-    class="flex-1 flex items-center justify-center mt-12 transition-all duration-300">
+  <main
+    :class="{ 'ml-64': sidebarOpen, 'ml-0': !sidebarOpen }"
+    class="flex-1 flex items-center justify-center mt-12 transition-all duration-300"
+  >
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full mx-6 sm:ml-72 mr-12">
-      <div class="flex items-center justify-between flex-col md:flex-row space-y-4 md:space-y-0 pb-4 bg-white">
+      <div
+        class="flex items-center justify-between flex-col md:flex-row space-y-4 md:space-y-0 pb-4 bg-white"
+      >
         <!-- Search Input -->
         <div class="relative">
-          <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-              viewBox="0 0 20 20">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg
+              class="w-4 h-4 text-gray-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
             </svg>
           </div>
           <input
@@ -22,29 +36,42 @@
             placeholder="Search for users"
           />
         </div>
+
         <!-- Add User Button -->
         <button
-          @click="openModal"
+          @click="openAddModal"
           class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 mt-5 m-4"
         >
           Add User
         </button>
       </div>
 
-      <BaseTable :columns="columns" :rows="filteredUsers" />
+      <!-- Tabela -->
+      <BaseTable
+        :columns="columns"
+        :rows="filteredUsers"
+        @editItem="handleEditUser"
+        @deleteItem="handleDeleteUser"
+      />
     </div>
   </main>
 
-  <!-- Modal Component for Adding User -->
-  <Modal :isOpen="modalOpen" :onClose="closeModal" :onSave="addUser" />
+  <!-- Modal para criar ou editar usuário -->
+  <Modal
+    :isOpen="modalOpen"
+    :onClose="closeModal"
+    :onSave="saveUser"
+    :user="selectedUser"
+    :mode="modalMode"
+  />
 </template>
 
 <script>
+import { ref, computed, onMounted } from "vue";
 import HeaderA from "@/components/HeaderA.vue";
 import BaseTable from "@/components/ui/baseTable.vue";
-import Modal from "@/components/ui/Modal.vue";
+import Modal from "@/components/ui/UserModal.vue";
 import { useUsersStore } from "@/stores/users";
-import { computed, ref, onMounted } from "vue";
 
 export default {
   components: {
@@ -54,22 +81,30 @@ export default {
   },
   setup() {
     const usersStore = useUsersStore();
+
+    // Controles do modal
     const modalOpen = ref(false);
+    const modalMode = ref("create"); // "create" ou "edit"
+    const selectedUser = ref(null);
+
+    // Controle da pesquisa
     const searchQuery = ref("");
 
-    // Computed para ir buscar os utilizadores da store
+    // Computed para lista de usuários formatada
     const users = computed(() =>
       usersStore.users.map((user) => ({
         id: user.id,
         name: user.name,
         email: user.email,
+        password: user.password,
+        age: user.age,
         role: user.role,
         ticket: user.ticket || "No Ticket",
-        action: "Edit",
+        action: "",
       }))
     );
 
-    // Computed para filtrar utilizadores com base na busca
+    // Computed para filtro
     const filteredUsers = computed(() => {
       if (!searchQuery.value) return users.value;
       return users.value.filter((user) =>
@@ -77,51 +112,85 @@ export default {
       );
     });
 
-    // Carregar os dados da store ao montar o componente
+    // Carregar usuários ao montar
     onMounted(async () => {
       if (!usersStore.users.length) {
         await usersStore.fetchUsers();
       }
     });
 
-    // Função para abrir o modal
-    const openModal = () => {
+    // Abrir modal para CRIAR
+    const openAddModal = () => {
+      selectedUser.value = null;
+      modalMode.value = "create";
       modalOpen.value = true;
     };
 
-    // Função para fechar o modal
+    // Fechar modal
     const closeModal = () => {
       modalOpen.value = false;
     };
 
-    // Função para adicionar um novo utilizador
-    const addUser = async (newUser) => {
-      if (newUser.name && newUser.email && newUser.role) {
-        try {
-          await usersStore.addUser(newUser);
-        } catch (error) {
-          console.error("Erro ao adicionar utilizador:", error);
+    // Salvar usuário (tanto create quanto edit)
+    const saveUser = async (userData) => {
+      try {
+        if (modalMode.value === "create") {
+          // Criando novo usuário
+          await usersStore.addUser(userData);
+        } else {
+          // Editando usuário existente
+          await usersStore.updateUser(userData);
         }
+      } catch (error) {
+        console.error("Erro ao salvar utilizador:", error);
       }
       closeModal();
     };
 
+    // Editar usuário (acionado pelo botão Edit na tabela)
+    const handleEditUser = (row) => {
+      selectedUser.value = { ...row }; // faz uma cópia para edição
+      modalMode.value = "edit";
+      modalOpen.value = true;
+    };
+
+    // Excluir usuário (acionado pelo botão Delete na tabela)
+    const handleDeleteUser = async (row) => {
+      try {
+        // Exemplo de confirmação
+        if (confirm(`Are you sure you want to delete ${row.name}?`)) {
+          await usersStore.removeUser(row.id);
+        }
+      } catch (error) {
+        console.error("Erro ao excluir utilizador:", error);
+      }
+    };
+
+    // Definição das colunas da tabela
+    const columns = [
+      { label: "ID", field: "id" },
+      { label: "Name", field: "name" },
+      { label: "Email", field: "email" },
+      { label: "Password", field: "password"},
+      { label: "age", field: "age"},
+      { label: "User role", field: "role" },
+      { label: "Ticket", field: "ticket" },
+      { label: "Action", field: "action" },
+    ];
+
     return {
-      columns: [
-        { label: "ID", field: "id" },
-        { label: "Name", field: "name" },
-        { label: "Email", field: "email" },
-        { label: "User role", field: "role" },
-        { label: "Ticket", field: "ticket" },
-        { label: "Action", field: "action" },
-      ],
+      columns,
       users,
       filteredUsers,
       searchQuery,
       modalOpen,
-      openModal,
+      modalMode,
+      selectedUser,
+      openAddModal,
       closeModal,
-      addUser,
+      saveUser,
+      handleEditUser,
+      handleDeleteUser,
     };
   },
 };

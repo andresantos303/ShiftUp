@@ -40,7 +40,7 @@
 <script>
 import HeaderA from "@/components/HeaderA.vue";
 import BaseTable from "@/components/ui/baseTable.vue";
-import Modal from "@/components/ui/Modal.vue";
+import Modal from "@/components/ui/ProductModal.vue";
 import { useSpeakersStore } from "@/stores/speakers"; // Store para palestrantes
 import { computed, ref, onMounted } from "vue";
 

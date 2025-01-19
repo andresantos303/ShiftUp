@@ -51,7 +51,7 @@
   <script>
   import HeaderA from "@/components/HeaderA.vue";
   import BaseTable from "@/components/ui/baseTable.vue";
-  import Modal from "@/components/ui/Modal.vue";
+  import Modal from "@/components/ui/ProductModal.vue";
   import { useTicketsStore } from "@/stores/tickets";
   import { computed, ref, onMounted } from "vue";
   
