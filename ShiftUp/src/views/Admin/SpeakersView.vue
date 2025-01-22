@@ -1,14 +1,33 @@
 <template>
   <HeaderA />
   <!-- Page Content -->
-  <main :class="{'ml-64': sidebarOpen, 'ml-0': !sidebarOpen}" class="flex-1 flex items-center justify-center mt-12 transition-all duration-300">
+  <main
+    :class="{ 'ml-64': sidebarOpen, 'ml-0': !sidebarOpen }"
+    class="flex-1 flex items-center justify-center mt-12 transition-all duration-300"
+  >
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full mx-6 sm:ml-72 mr-12 mb-12">
-      <div class="flex items-center justify-between flex-col md:flex-row space-y-4 md:space-y-0 pb-4 bg-white">
+      <div
+        class="flex items-center justify-between flex-col md:flex-row space-y-4 md:space-y-0 pb-4 bg-white"
+      >
         <!-- Search Input -->
         <div class="relative">
-          <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+          <div
+            class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none"
+          >
+            <svg
+              class="w-4 h-4 text-gray-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
             </svg>
           </div>
           <input
@@ -29,43 +48,73 @@
       </div>
 
       <!-- BaseTable Component -->
-      <BaseTable :columns="columns" :rows="filteredRows" />
+      <BaseTable
+        :columns="columns"
+        :rows="filteredRows"
+        @editItem="handleEditSpeaker"
+        @deleteItem="handleDeleteSpeaker"
+      />
     </div>
   </main>
 
-  <!-- Modal Component for Adding Speaker -->
-  <Modal :isOpen="modalOpen" :onClose="closeModal" :onSave="addSpeaker" />
+  <!-- Modal Component for Adding/Editing Speaker -->
+  <SpeakerModal
+    :isOpen="modalOpen"
+    :onClose="closeModal"
+    :onSave="saveSpeaker"
+    :speaker="selectedSpeaker"
+    :mode="modalMode"
+  />
 </template>
 
 <script>
+import { ref, computed, onMounted } from "vue";
 import HeaderA from "@/components/HeaderA.vue";
 import BaseTable from "@/components/ui/baseTable.vue";
-import Modal from "@/components/ui/ProductModal.vue";
-import { useSpeakersStore } from "@/stores/speakers"; // Store para palestrantes
-import { computed, ref, onMounted } from "vue";
+import SpeakerModal from "@/components/ui/SpeakerModal.vue";
+import { useSpeakersStore } from "@/stores/speakers";
 
 export default {
+  name: "SpeakersView",
   components: {
     HeaderA,
     BaseTable,
-    Modal, // Modal para adicionar palestrantes
+    SpeakerModal,
   },
   setup() {
     const speakersStore = useSpeakersStore();
-    const modalOpen = ref(false); // Controla a visibilidade do modal
-    const searchQuery = ref(""); // Campo de busca
 
-    // Computed para pegar os palestrantes da store
+    // Controla o estado do sidebar (caso exista)
+    const sidebarOpen = false;
+
+    // Controla a visibilidade do modal
+    const modalOpen = ref(false);
+    // Controla se estamos criando ou editando
+    const modalMode = ref("create"); // "create" ou "edit"
+    // Armazena o palestrante selecionado para edição
+    const selectedSpeaker = ref(null);
+
+    // Campo de busca
+    const searchQuery = ref("");
+
+    // Ao montar, carregamos os speakers caso ainda não tenhamos nada na store
+    onMounted(async () => {
+      if (!speakersStore.speakers.length) {
+        await speakersStore.fetchTodos();
+      }
+    });
+
+    // Gera as linhas (rows) da tabela a partir da store
     const rows = computed(() =>
       speakersStore.speakers.map((speaker) => ({
         id: speaker.id,
         name: speaker.name,
         job: speaker.job,
-        action: "Edit",
+        description: speaker.description,
       }))
     );
 
-    // Computed para filtrar palestrantes com base na busca
+    // Filtra as linhas de acordo com a busca por nome
     const filteredRows = computed(() => {
       if (!searchQuery.value) return rows.value;
       return rows.value.filter((row) =>
@@ -73,55 +122,76 @@ export default {
       );
     });
 
-    // Carregar os dados da store ao montar o componente
-    onMounted(async () => {
-      if (!speakersStore.speakers.length) {
-        await speakersStore.fetchTodos();
-      }
-    });
+    // Colunas da tabela
+    const columns = [
+      { label: "ID", field: "id" },
+      { label: "Name", field: "name" },
+      { label: "Job", field: "job" },
+      { label: "Description", field: "description" },
+      { label: "Action", field: "action" },
+    ];
 
-    // Função para abrir o modal
+    // Abre o modal para criar
     const openModal = () => {
+      selectedSpeaker.value = null;
+      modalMode.value = "create";
       modalOpen.value = true;
     };
 
-    // Função para fechar o modal
+    // Fecha o modal
     const closeModal = () => {
       modalOpen.value = false;
     };
 
-    // Função para adicionar um novo palestrante
-    const addSpeaker = async (newSpeaker) => {
-      if (newSpeaker.name && newSpeaker.email && newSpeaker.job) {
+    // Salva speaker (criar ou editar)
+    const saveSpeaker = async (speakerData) => {
+      // Checa se estamos criando ou editando
+      if (modalMode.value === "create") {
+        await speakersStore.addSpeaker(speakerData);
+      } else {
+        await speakersStore.updateSpeaker(speakerData);
+      }
+      closeModal();
+    };
+
+    // Editar speaker: recebe a linha clicada no BaseTable
+    const handleEditSpeaker = (row) => {
+      // Busca o registro completo na store
+      const speakerFromStore = speakersStore.speakers.find(
+        (s) => s.id === row.id
+      );
+      // Seta o palestrante selecionado e muda o modo para edit
+      selectedSpeaker.value = { ...speakerFromStore };
+      modalMode.value = "edit";
+      modalOpen.value = true;
+    };
+
+    // Deletar speaker: recebe a linha clicada no BaseTable
+    const handleDeleteSpeaker = async (row) => {
+      if (confirm(`Are you sure you want to delete ${row.name}?`)) {
         try {
-          // Adiciona o palestrante à store e recarrega a lista
-          await speakersStore.addSpeaker(newSpeaker);
+          await speakersStore.removeSpeaker(row.id);
         } catch (error) {
-          console.error("Erro ao adicionar palestrante:", error);
+          console.error("Erro ao remover palestrante:", error);
         }
       }
-      closeModal(); // Fecha o modal após adicionar
     };
 
     return {
-      columns: [
-        { label: "ID", field: "id" },
-        { label: "Name", field: "name" },
-        { label: "Job", field: "job" },
-        { label: "Action", field: "action" },
-      ],
+      sidebarOpen,
+      columns,
       rows,
       filteredRows,
       searchQuery,
       modalOpen,
+      modalMode,
+      selectedSpeaker,
       openModal,
       closeModal,
-      addSpeaker,
+      saveSpeaker,
+      handleEditSpeaker,
+      handleDeleteSpeaker,
     };
   },
 };
 </script>
-
-<style scoped>
-/* Custom styles here */
-</style>

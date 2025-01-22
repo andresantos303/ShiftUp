@@ -54,7 +54,6 @@ export default {
     const ordersStore = useOrdersStore();
     const searchQuery = ref("");
 
-    // Computed para pegar os pedidos da store
     const orders = computed(() =>
       ordersStore.orders.map((order) => ({
         id: order.id,
@@ -72,13 +71,6 @@ export default {
       return orders.value.filter((order) =>
         order.name.toLowerCase().includes(searchQuery.value.toLowerCase())
       );
-    });
-
-    // Carregar os dados da store ao montar o componente
-    onMounted(async () => {
-      if (!ordersStore.orders.length) {
-        await ordersStore.fetchOrders();
-      }
     });
 
     return {

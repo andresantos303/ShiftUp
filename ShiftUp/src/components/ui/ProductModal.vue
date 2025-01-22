@@ -173,7 +173,6 @@
             };
   
             // Se 'newVal.image' for string (URL), exibe na preview
-            // Se for um File, também gera URL local
             if (typeof newVal.image === "string") {
               this.imagePreview = newVal.image;
             } else if (newVal.image instanceof File) {
@@ -194,12 +193,8 @@
       },
       submitForm() {
         // Validação simples: checa se os campos obrigatórios estão preenchidos
-        if (
-          this.newProduct.name &&
-          this.newProduct.price &&
-          this.newProduct.category &&
-          this.newProduct.purchased !== null
-        ) {
+        if (this.newProduct.name && this.newProduct.price && this.newProduct.category && this.newProduct.purchased !== null) 
+        {
           // Se estamos criando e não foi atribuído um id, cria um
           if (this.mode === "create" && !this.newProduct.id) {
             this.newProduct.id = Date.now();

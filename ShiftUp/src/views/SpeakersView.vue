@@ -6,6 +6,7 @@
     </div>
     <SpeakersSection/>
   </div>
+  <div class="text-center mb-12"></div>
   <Footer/>
 </template>
 

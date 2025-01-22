@@ -45,9 +45,7 @@ const totalVolunteers = computed(() => usersStore.getVolunteers.length);
 const totalOrders = computed(() => ordersStore.orders.length);
 const totalProducts = computed(() => productsStore.products.length);
 const totalConferences = computed(() => conferencesStore.conferences.length);
-const totalTicketsPurchased = computed(
-  () => ticketsStore.totalTicketsPurchased
-);
+const totalTicketsPurchased = computed(() => ticketsStore.totalTicketsPurchased);
 
 // Monta um array de dados para renderizar facilmente
 const stats = computed(() => [

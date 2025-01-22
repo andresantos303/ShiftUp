@@ -1,5 +1,5 @@
 <template>
-  <footer class="bg-gray-100 py-10 px-5 text-gray-700">
+  <footer class="bg-gray-100 py-10 w-ful px-5 text-gray-700 bottom-0">
     <div class="container mx-auto flex flex-wrap justify-between gap-5">
       
       <!-- Logo and description -->
@@ -55,6 +55,3 @@ export default {
   name: "FooterComponent",
 };
 </script>
-
-<style scoped>
-</style>

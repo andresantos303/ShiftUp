@@ -70,6 +70,15 @@
           </li>
           <li>
             <RouterLink
+              :to="`/admin/dashboard/tickets`"
+              :class="isActive(`/admin/dashboard/tickets`) ? 'bg-custom-gradient text-white' : 'text-gray-700 hover:bg-custom-gradient hover:text-white'"
+              class="nav-link block px-6 py-2.5"
+            >
+            Tickets
+            </RouterLink>
+          </li>
+          <li>
+            <RouterLink
               :to="`/admin/dashboard/orders`"
               :class="isActive(`/admin/dashboard/orders`) ? 'bg-custom-gradient text-white' : 'text-gray-700 hover:bg-custom-gradient hover:text-white'"
               class="nav-link block px-6 py-2.5"

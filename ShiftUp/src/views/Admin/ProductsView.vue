@@ -90,12 +90,6 @@ export default {
     // Controle da pesquisa
     const searchQuery = ref("");
 
-    // Carrega os produtos da store ao montar
-    onMounted(async () => {
-      if (!productsStore.products.length) {
-        await productsStore.fetchProducts();
-      }
-    });
 
     // Lista de produtos formatada para a tabela
     const products = computed(() =>
@@ -157,25 +151,22 @@ export default {
       closeModal();
     };
 
-    // Quando clicamos no botão Edit
+    // Edit product
     const handleEditProduct = (row) => {
-      // Localiza o produto completo na store (caso queira mais dados)
-      const productFromStore = productsStore.products.find(
-        (p) => p.id === row.id
-      );
-      selectedProduct.value = { ...productFromStore }; // copia
+      const productFromStore = productsStore.products.find((p) => p.id === row.id);
+      selectedProduct.value = { ...productFromStore };
       modalMode.value = "edit";
       modalOpen.value = true;
     };
 
-    // Quando clicamos no botão Delete
+    // Delete product
     const handleDeleteProduct = async (row) => {
       try {
         if (confirm(`Are you sure you want to delete: ${row.name}?`)) {
           await productsStore.removeProduct(row.id);
         }
       } catch (error) {
-        console.error("Erro ao excluir produto:", error);
+        console.error("Error to remove product:", error);
       }
     };
 
