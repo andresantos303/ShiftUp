@@ -5,13 +5,63 @@ export const useProductsStore = defineStore("products", {
     products: [
       {
         id: 1,
-        name: "Tshirt Shift Up",
+        name: "Tshirt Shift Up - Blue",
         price: 25,
         description:
           "A high-quality t-shirt featuring the Shift Up logo. Perfect for event attendees and fans to wear and showcase their support.",
         category: "clothes",
         purchased: 0,
-        image: null,
+        image: '/public/images/blueTshirt.png',
+      },
+      {
+        id: 1,
+        name: "Tshirt Shift Up - White",
+        price: 25,
+        description:
+          "A high-quality t-shirt featuring the Shift Up logo. Perfect for event attendees and fans to wear and showcase their support.",
+        category: "clothes",
+        purchased: 0,
+        image: '/public/images/whiteTshirt.png',
+      },
+      {
+        id: 1,
+        name: "Hoodie Shift Up - Blue",
+        price: 50,
+        description:
+          "A high-quality hoodie featuring the Shift Up logo. Perfect for event attendees and fans to wear and showcase their support.",
+        category: "clothes",
+        purchased: 0,
+        image: '/public/images/blueHoodie.png',
+      },
+      {
+        id: 1,
+        name: "Hoodie Shift Up - White",
+        price: 50,
+        description:
+          "A high-quality Hoodie featuring the Shift Up logo. Perfect for event attendees and fans to wear and showcase their support.",
+        category: "clothes",
+        purchased: 0,
+        image: '/public/images/whiteHoodie.png',
+      },
+      {
+        id: 1,
+        name: "Notebook Shift Up",
+        price: 10,
+        description:
+          "A high-quality notebook featuring the Shift Up logo. Perfect for event attendees and fans to wear and showcase their support.",
+        category: "acessorios",
+        purchased: 0,
+        image: '/public/images/notebook.png',
+      },
+      {
+        id: 1,
+        name: "Pin Shift Up",
+        price: 5,
+        description:
+          "A high-quality pin featuring the Shift Up logo. Perfect for event attendees and fans to wear and showcase their support.",
+        category: "acessorios",
+        purchased: 0,
+        image: '/public/images/pin.png',
       },
     ],
   }),
