@@ -8,8 +8,9 @@
 
       <!-- Actions and Hamburger Button -->
       <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+        <!-- Condição: se o user tiver ticket != null OU role="voluntary", exibe Dashboard -->
         <RouterLink
-          v-if="haveTicket && user.role == 'participant' || user.role == 'voluntary'"
+          v-if="haveTicket"
           :to="`/participante/${user.id}/profile`"
           class="hidden md:block text-white text-base px-8 py-3"
         >
