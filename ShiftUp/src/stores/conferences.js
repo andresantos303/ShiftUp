@@ -11,7 +11,7 @@ export const useConferencesStore = defineStore('conferences', {
         local: "Centre Stage MEO Arena",
         category: "Main Stage",
         date: "November 11",
-        time: "6.00PM - 6.20PM",
+        time: "18:00",
         participants: []
       },
       {
@@ -22,7 +22,7 @@ export const useConferencesStore = defineStore('conferences', {
         local: "Centre Stage MEO Arena",
         category: "Main Stage",
         date: "November 13",
-        time: "6.00PM - 6.20PM",
+        time: "19:00",
         participants: []
       }
     ],

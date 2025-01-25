@@ -1,4 +1,5 @@
 <script>
+import { useRoute } from "vue-router";
 import HeaderP from "../../components/HeaderP.vue";
 import { useProductsStore } from "@/stores/products";
 import { useOrdersStore } from "@/stores/orders";
@@ -10,11 +11,13 @@ export default {
   setup() {
     const productsStore = useProductsStore();
     const ordersStore = useOrdersStore();
+    const route = useRoute();
+    const id = route.params.id;
 
     const buyProduct = (productId, quantity = 1) => {
       ordersStore.addOrder({
         productId,
-        userId: 1, // Substitua com o ID do user logado
+        userId: id,
         quantity,
       });
       alert("Product added to your orders!");
@@ -43,7 +46,7 @@ export default {
         <h2 class="text-lg font-semibold text-gray-800">{{ product.name }}</h2>
         <p class="text-sm text-gray-600 mt-2">{{ product.description }}</p>
         <div class="mt-4">
-          <p class="text-lg font-bold text-blue-600">${{ product.price }}</p>
+          <p class="text-lg font-bold text-blue-600">{{ product.price }}€</p>
           <p class="text-sm text-gray-500">Category: {{ product.category }}</p>
           <p class="text-sm text-gray-500">Purchased: {{ product.purchased }}</p>
         </div>

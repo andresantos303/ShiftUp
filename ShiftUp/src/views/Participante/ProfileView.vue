@@ -1,4 +1,5 @@
 <script>
+import { useRoute } from "vue-router";
 import HeaderP from "../../components/HeaderP.vue";
 import Button from "../../components/ui/button.vue";
 import { useUsersStore } from "@/stores/users";
@@ -11,12 +12,11 @@ export default {
   },
   setup() {
     const usersStore = useUsersStore();
-
-    // Simulação: Pegando o ID do usuário logado
-    const loggedUserId = 1; // Você pode dinamicamente obter isso da autenticação
-
+    const route = useRoute();
+    const id = parseInt(route.params.id);
+    
     // Computed para obter o usuário logado
-    const user = computed(() => usersStore.getUserById(loggedUserId));
+    const user = computed(() => usersStore.getUserById(id));
 
     // Clonamos os dados do usuário para edição
     const editableUser = ref({ ...user.value });

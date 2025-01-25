@@ -128,7 +128,7 @@
               :class="isActive(`/admin/dashboard/itenerary`) ? 'bg-custom-gradient text-white' : 'text-gray-700 hover:bg-custom-gradient hover:text-white'"
               class="nav-link block px-6 py-2.5"
             >
-              Itenerary
+              Conferences
             </RouterLink>
           </li>
         </ul>

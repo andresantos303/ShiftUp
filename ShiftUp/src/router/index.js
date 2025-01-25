@@ -93,12 +93,6 @@ const router = createRouter({
       component: () => import('../views/Admin/TicketsView.vue'),
     },
     {
-      path: '/admin/dashboard/conferences',
-      name: 'conferencesAdmin',
-      meta: { requiresAuth: true },
-      component: () => import('../views/Admin/ConferencesView.vue'),
-    },
-    {
       path: '/admin/dashboard/volunteers',
       name: 'volunteersAdmin',
       meta: { requiresAuth: true },
