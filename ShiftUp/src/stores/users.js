@@ -20,6 +20,7 @@ export const useUsersStore = defineStore('users', {
         password: "And123",
         age: "20",
         role: "participant",
+        photo: "/images/speaker3.png",
         conferences: [], 
         ticket: null
       },
@@ -30,6 +31,7 @@ export const useUsersStore = defineStore('users', {
         password: "And123",
         age: "25",
         role: "voluntary",
+        photo: "/images/speaker5.png",
         conferences: [], 
         ticket: null
       },

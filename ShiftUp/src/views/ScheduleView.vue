@@ -6,50 +6,31 @@
 
       <!-- Botões para selecionar datas -->
       <div class="flex justify-center mb-8">
-        <div
-          class="px-4 py-2 mx-2 rounded-full cursor-pointer"
-          :class="{
-            'bg-custom-gradient text-white': selectedDate === 'November 11',
-            'bg-gray-200 text-gray-600': selectedDate !== 'November 11'
-          }"
-          @click="selectDate('November 11')"
-        >
+        <div class="px-4 py-2 mx-2 rounded-full cursor-pointer" :class="{
+          'bg-custom-gradient text-white': selectedDate === 'November 11',
+          'bg-gray-200 text-gray-600': selectedDate !== 'November 11'
+        }" @click="selectDate('November 11')">
           November 11
         </div>
-        <div
-          class="px-4 py-2 mx-2 rounded-full cursor-pointer"
-          :class="{
-            'bg-custom-gradient text-white': selectedDate === 'November 12',
-            'bg-gray-200 text-gray-600': selectedDate !== 'November 12'
-          }"
-          @click="selectDate('November 12')"
-        >
+        <div class="px-4 py-2 mx-2 rounded-full cursor-pointer" :class="{
+          'bg-custom-gradient text-white': selectedDate === 'November 12',
+          'bg-gray-200 text-gray-600': selectedDate !== 'November 12'
+        }" @click="selectDate('November 12')">
           November 12
         </div>
-        <div
-          class="px-4 py-2 mx-2 rounded-full cursor-pointer"
-          :class="{
-            'bg-custom-gradient text-white': selectedDate === 'November 13',
-            'bg-gray-200 text-gray-600': selectedDate !== 'November 13'
-          }"
-          @click="selectDate('November 13')"
-        >
+        <div class="px-4 py-2 mx-2 rounded-full cursor-pointer" :class="{
+          'bg-custom-gradient text-white': selectedDate === 'November 13',
+          'bg-gray-200 text-gray-600': selectedDate !== 'November 13'
+        }" @click="selectDate('November 13')">
           November 13
         </div>
       </div>
 
       <!-- Grade de EventCards -->
       <div class="grid gap-6 lg:grid-cols-2">
-        <EventCard
-          v-for="conference in filteredConferences"
-          :key="conference.id"
-          :location="conference.category"
-          :title="conference.title"
-          :date="conference.date"
-          :time="conference.time"
-          :locationDetail="conference.local"
-          :speakers="mapSpeakers(conference.speakers)"
-        />
+        <EventCard v-for="conference in filteredConferences" :key="conference.id" :location="conference.category"
+          :title="conference.title" :date="conference.date" :time="conference.time" :locationDetail="conference.local"
+          :speakers="mapSpeakers(conference.speakers)" />
       </div>
     </div>
   </div>
@@ -102,15 +83,15 @@ export default {
         );
         return found
           ? {
-              image: found.image,
-              name: found.name,
-              title: "Speaker",
-            }
+            image: found.image,
+            name: found.name,
+            title: "Speaker",
+          }
           : {
-              image: "https://placehold.co/400",
-              name: speakerName,
-              title: "Speaker",
-            };
+            image: "https://placehold.co/400",
+            name: speakerName,
+            title: "Speaker",
+          };
       });
     };
 

@@ -28,7 +28,7 @@
             <div class="flex items-center ms-3 relative">
               <img
                 class="w-8 h-8 rounded-full cursor-pointer"
-                src="/public/images/profile-icon.png"
+                :src="user.photo ? user.photo: '/images/profile-icon.png'"
                 alt="User photo"
                 @click="toggleDropdown"
               />
@@ -71,7 +71,8 @@
       <div class="h-full px-3 pb-4 overflow-y-auto">
         <ul class="space-y-2 font-medium">
           <li>
-            <RouterLink
+            <RouterLink 
+              v-if="user.role !== 'voluntary'"
               :to="`/participante/${id}/events`"
               :class="isActive(`/participante/${id}/events`) ? 'bg-custom-gradient text-white' : 'text-gray-700 hover:bg-custom-gradient hover:text-white'"
               class="nav-link block px-6 py-2.5"
@@ -118,9 +119,11 @@
 </template>
 
 <script>
-import { RouterLink, useRoute } from "vue-router";
+import {  useRoute } from "vue-router";
 import { ref } from "vue";
 import router from "@/router";
+import { useUsersStore } from "@/stores/users";
+
 
 export default {
   setup() {
@@ -128,6 +131,8 @@ export default {
     const id = route.params.id;
     const sidebarOpen = ref(false);
     const dropdownOpen = ref(false);
+    const userStore = useUsersStore();
+    const user = userStore.getUserById(parseInt(id));
 
     const toggleSidebar = () => {
       sidebarOpen.value = !sidebarOpen.value;
@@ -151,6 +156,7 @@ export default {
 
     return {
       id,
+      user,
       sidebarOpen,
       dropdownOpen,
       toggleSidebar,

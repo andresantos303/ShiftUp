@@ -5,8 +5,9 @@ export const useConferencesStore = defineStore('conferences', {
     conferences: [
       {
         id: 1,
-        title: "Welcome to Shift Up",
+        title: "Welcome to Shift Up day 1",
         speakers: ["Jane Smith"],
+        type:"Starter",
         description: "An exciting introduction to the Shift Up event, highlighting the schedule, speakers, and goals for the conference. Join us to kick off this inspiring journey together!",
         local: "Centre Stage MEO Arena",
         category: "Main Stage",
@@ -16,8 +17,21 @@ export const useConferencesStore = defineStore('conferences', {
       },
       {
         id: 2,
-        title: "Welcome to Shift Up xxx",
+        title: "Welcome to Shift Up day 2",
         speakers: ["Mark Johnson"],
+        type:"Starter",
+        description: "An exciting introduction to the Shift Up event, highlighting the schedule, speakers, and goals for the conference. Join us to kick off this inspiring journey together!",
+        local: "Centre Stage MEO Arena",
+        category: "Main Stage",
+        date: "November 12",
+        time: "19:00",
+        participants: []
+      },
+      {
+        id: 3,
+        title: "Welcome to Shift Up day 3",
+        speakers: ["Mark Johnson"],
+        type:"Starter",
         description: "An exciting introduction to the Shift Up event, highlighting the schedule, speakers, and goals for the conference. Join us to kick off this inspiring journey together!",
         local: "Centre Stage MEO Arena",
         category: "Main Stage",

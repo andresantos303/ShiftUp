@@ -3,35 +3,22 @@
     <HeaderA />
 
     <!-- Main Content -->
-    <main
-      :class="{ 'ml-64': sidebarOpen, 'ml-0': !sidebarOpen }"
-      class="flex flex-1 mt-16 transition-all duration-300"
-    >
+    <main :class="{ 'ml-64': sidebarOpen, 'ml-0': !sidebarOpen }" class="flex flex-1 mt-16 transition-all duration-300">
       <!-- Coluna da Esquerda -->
       <div class="w-64 p-4 bg-gray-50 shadow-md flex-shrink-0">
         <!-- Criar Novo Evento -->
-        <Button
-          label="+ Add New Event"
-          to="#"
-          :bgColor="'bg-custom-gradient'"
-          :textColor="'text-white'"
-          additionalClasses="w-full py-2 mb-4 text-center"
-          @click.native="createNewEvent"
-        />
+        <Button label="+ Add New Event" to="#" :bgColor="'bg-custom-gradient'" :textColor="'text-white'"
+          additionalClasses="w-full py-2 mb-4 text-center" @click.native="createNewEvent" />
 
         <p class="text-lg font-bold mb-4">Conferences</p>
 
         <!-- Lista de Cards de Conferências -->
         <!-- Repare que usamos 'conferencesList' (computed) para garantir que speakers sejam objetos -->
-        <div
-          v-for="conference in conferencesList"
-          :key="conference.id"
-          @click="selectConference(conference)"
-          class="card p-4 mb-4 bg-white rounded-lg shadow cursor-pointer hover:bg-gray-100"
-        >
+        <div v-for="conference in conferencesList" :key="conference.id" @click="selectConference(conference)"
+          class="card p-4 mb-4 bg-white rounded-lg shadow cursor-pointer hover:bg-gray-100">
           <!-- Tag (category) -->
           <div class="bg-custom-gradient text-white text-sm px-3 py-1 rounded-full mb-2">
-            {{ conference.category }}
+            {{ conference.category }} - {{ conference.type }}
           </div>
 
           <!-- Título -->
@@ -44,38 +31,19 @@
 
           <!-- Local (local) -->
           <p class="text-sm text-gray-600 flex items-center mt-2">
-            <svg
-              class="w-4 h-4 text-gray-400 mr-1"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M16.5 9.4a6.7 6.7 0 11-9.5 0 6.7 6.7 0 019.5 0z"
-              />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 12v6m0-3h6m-6-3H6"
-              />
+            <svg class="w-4 h-4 text-gray-400 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16.5 9.4a6.7 6.7 0 11-9.5 0 6.7 6.7 0 019.5 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12v6m0-3h6m-6-3H6" />
             </svg>
             {{ conference.local }}
           </p>
 
           <!-- Row de Speakers (já como objetos) -->
           <div class="flex mt-4 space-x-2">
-            <img
-              v-for="speakerObj in conference.speakers"
-              :key="speakerObj.id || speakerObj.name"
-              :src="speakerObj.image"
-              alt="Speaker"
-              class="w-8 h-8 rounded-full border border-gray-300"
-            />
+            <img v-for="speakerObj in conference.speakers" :key="speakerObj.id || speakerObj.name"
+              :src="speakerObj.image" alt="Speaker" class="w-8 h-8 rounded-full border border-gray-300" />
           </div>
         </div>
       </div>
@@ -91,33 +59,37 @@
           <!-- Nome da Conferência -->
           <div class="mb-4">
             <label class="block text-gray-600 mb-1">Name of Event</label>
-            <input
-              v-model="form.title"
-              type="text"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient"
-            />
+            <input v-model="form.title" type="text"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient" />
           </div>
 
           <!-- Lugar (stage → category) -->
           <div class="mb-4">
             <label class="block text-gray-600 mb-1">Place</label>
-            <select
-              v-model="form.stage"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient"
-            >
+            <select v-model="form.stage"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient">
               <option>Main Stage</option>
               <option>Centre Stage</option>
               <option>Workshop Room</option>
             </select>
           </div>
 
+          <!-- Ticket Type -->
+          <div class="mb-4">
+            <label class="block text-gray-600 mb-1">Type</label>
+            <select v-model="form.type"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient">
+              <option>Starter</option>
+              <option>Company</option>
+              <option>Enterprise</option>
+            </select>
+          </div>
+
           <!-- Date -->
           <div class="mb-4">
             <label class="block text-gray-600 mb-1">Date</label>
-            <select
-              v-model="form.date"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient"
-            >
+            <select v-model="form.date"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient">
               <option>November 11</option>
               <option>November 12</option>
               <option>November 13</option>
@@ -127,66 +99,37 @@
           <!-- Horário -->
           <div class="mb-4">
             <label class="block text-gray-600 mb-1">Time</label>
-            <input
-              v-model="form.time"
-              type="time"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient"
-            />
+            <input v-model="form.time" type="time"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient" />
           </div>
 
           <!-- Localização (location → local) -->
           <div class="mb-4">
             <label class="block text-gray-600 mb-1">Location</label>
-            <input
-              v-model="form.location"
-              type="text"
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient"
-            />
+            <input v-model="form.location" type="text"
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient" />
           </div>
 
           <!-- Adicionar Speakers -->
           <div class="mb-6">
             <label class="block text-gray-600 mb-2">Speakers</label>
             <div class="flex items-center space-x-4">
-              <select
-                v-model="selectedSpeaker"
-                class="w-1/2 border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient"
-              >
-                <option
-                  v-for="speaker in allSpeakers"
-                  :key="speaker.id"
-                  :value="speaker"
-                >
+              <select v-model="selectedSpeaker"
+                class="w-1/2 border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-custom-gradient">
+                <option v-for="speaker in allSpeakers" :key="speaker.id" :value="speaker">
                   {{ speaker.name }}
                 </option>
               </select>
-              <Button
-                label="Add Speaker"
-                to="#"
-                :bgColor="'bg-custom-gradient'"
-                :textColor="'text-white'"
-                additionalClasses="py-2 px-4"
-                @click="addSpeaker"
-              />
+              <Button label="Add Speaker" to="#" :bgColor="'bg-custom-gradient'" :textColor="'text-white'"
+                additionalClasses="py-2 px-4" @click="addSpeaker" />
             </div>
 
             <!-- Lista de Speakers Selecionados (objetos) -->
             <div class="flex mt-4 space-x-2">
-              <div
-                v-for="speaker in form.speakers"
-                :key="speaker.id || speaker.name"
-                class="relative"
-              >
-                <img
-                  :src="speaker.image"
-                  alt="Speaker"
-                  class="w-10 h-10 rounded-full border border-gray-300"
-                />
-                <button
-                  @click="removeSpeaker(speaker)"
-                  type="button"
-                  class="absolute top-0 right-0 bg-red-600 text-white rounded-full w-4 h-4 flex items-center justify-center"
-                >
+              <div v-for="speaker in form.speakers" :key="speaker.id || speaker.name" class="relative">
+                <img :src="speaker.image" alt="Speaker" class="w-10 h-10 rounded-full border border-gray-300" />
+                <button @click="removeSpeaker(speaker)" type="button"
+                  class="absolute top-0 right-0 bg-red-600 text-white rounded-full w-4 h-4 flex items-center justify-center">
                   ×
                 </button>
               </div>
@@ -194,14 +137,8 @@
           </div>
 
           <!-- Botão Salvar -->
-          <Button
-            label="Save Conference"
-            to="#"
-            :bgColor="'bg-custom-gradient'"
-            :textColor="'text-white'"
-            additionalClasses="w-full py-3"
-            @click="handleSubmit"
-          />
+          <Button label="Save Conference" to="#" :bgColor="'bg-custom-gradient'" :textColor="'text-white'"
+            additionalClasses="w-full py-3" @click="handleSubmit" />
         </form>
       </div>
     </main>
@@ -224,13 +161,14 @@ export default {
   data() {
     return {
       sidebarOpen: true,
-      selectedConference: null, 
-      selectedSpeaker: null,   
+      selectedConference: null,
+      selectedSpeaker: null,
 
       // Formulário local
       form: {
         title: "",
-        stage: "",     
+        stage: "",
+        type: "",
         date: "",
         time: "",
         location: "",
@@ -291,9 +229,10 @@ export default {
 
       this.form.title = conference.title;
       this.form.stage = conference.category;
+      this.form.type = conference.type;
       this.form.date = conference.date;
       this.form.time = conference.time;
-      this.form.location = conference.local;  
+      this.form.location = conference.local;
 
       /*
        Verifica se conference.speakers são strings ou objetos.
@@ -365,6 +304,7 @@ export default {
       this.form = {
         title: "",
         stage: "",
+        type: "",
         date: "",
         time: "",
         location: "",
