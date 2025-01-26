@@ -2,28 +2,14 @@
   <div class="flex items-center justify-center">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-[1200px]">
       <!-- Renderiza as colunas dinâmicas -->
-      <div
-        v-for="(column, index) in formattedColumns"
-        :key="index"
-        class="grid gap-4"
-      >
+      <div v-for="(column, index) in formattedColumns" :key="index" class="grid gap-4">
         <!-- Renderiza os itens de cada coluna -->
-        <div
-          v-for="(speaker, imgIndex) in column"
-          :key="imgIndex"
-          class="relative cursor-pointer"
-          @click="goToSpeakerDetails(speaker.id)"
-        >
+        <div v-for="(speaker, imgIndex) in column" :key="imgIndex" class="relative cursor-pointer"
+          @click="goToSpeakerDetails(speaker.id)">
           <!-- Imagem do Palestrante -->
-          <img
-            class="h-auto max-w-full rounded-lg"
-            :src="speaker.image"
-            :alt="speaker.name"
-          />
+          <img class="h-full max-w-full rounded-lg" :src="speaker.image" :alt="speaker.name" />
           <!-- Informações do Palestrante -->
-          <div
-            class="absolute bottom-0 left-0 right-0 bg-white p-4 rounded-b-lg text-left"
-          >
+          <div class="absolute bottom-0 left-0 right-0 bg-white p-4 rounded-b-lg text-left">
             <h3 class="text-lg font-semibold">{{ speaker.name }}</h3>
             <p class="text-sm text-gray-500">{{ speaker.job }}</p>
           </div>

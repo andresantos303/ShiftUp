@@ -272,6 +272,7 @@ export default {
         this.conferencesStore.updateConference({
           id: this.selectedConference.id,
           title: this.form.title,
+          type: this.form.type,
           category: this.form.stage,
           local: this.form.location,
           date: this.form.date,
@@ -288,6 +289,7 @@ export default {
           id: Date.now(),
           title: this.form.title,
           category: this.form.stage,
+          type: this.form.type,
           local: this.form.location,
           date: this.form.date,
           time: this.form.time,
