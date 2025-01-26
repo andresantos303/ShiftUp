@@ -100,7 +100,7 @@ export default {
       modalOpen.value = false;
     };
 
-    // Salvar user (tanto create quanto edit)
+    // guardar user (tanto create quanto edit)
     const saveUser = async (userData) => {
       try {
         if (modalMode.value === "create") {
@@ -111,7 +111,7 @@ export default {
           await usersStore.updateUser(userData);
         }
       } catch (error) {
-        console.error("Erro ao salvar utilizador:", error);
+        console.error("Erro ao guardar utilizador:", error);
       }
       closeModal();
     };

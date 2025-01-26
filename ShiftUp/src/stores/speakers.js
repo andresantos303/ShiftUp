@@ -68,7 +68,6 @@ export const useSpeakersStore = defineStore("speakers", {
     getSpeakerById: (state) => (id) => {
       return state.speakers.find((speaker) => speaker.id === id.toString());
     },
-    // NOVO GETTER PARA FACILITAR O CÁLCULO DO TOTAL DE SPEAKERS
     totalSpeakers: (state) => {
       return state.speakers.length;
     },

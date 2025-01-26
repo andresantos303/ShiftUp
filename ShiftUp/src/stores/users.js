@@ -5,9 +5,9 @@ export const useUsersStore = defineStore('users', {
     users: [
       {
         id: 1,
-        name: "André Santos",
-        email: "andrecostasantos2003@gmail.com",
-        password: "And123",
+        name: "admin",
+        email: "admin@gmail.com",
+        password: "admin123",
         age: "20",
         role: "admin",
         conferences: [],
@@ -15,9 +15,9 @@ export const useUsersStore = defineStore('users', {
       },
       {
         id: 2,
-        name: "André Costa",
-        email: "jehetrolha33@gmail.com",
-        password: "And123",
+        name: "Participant",
+        email: "participant@gmail.com",
+        password: "participant123",
         age: "20",
         role: "participant",
         photo: "/images/speaker3.png",
@@ -26,9 +26,9 @@ export const useUsersStore = defineStore('users', {
       },
       {
         id: 3,
-        name: "Little John",
-        email: "littlejohn@gmail.com",
-        password: "And123",
+        name: "voluntary",
+        email: "voluntary@gmail.com",
+        password: "voluntary123",
         age: "25",
         role: "voluntary",
         photo: "/images/speaker5.png",

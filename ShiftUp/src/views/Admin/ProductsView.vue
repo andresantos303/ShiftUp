@@ -146,7 +146,7 @@ export default {
           await productsStore.updateProduct(productData);
         }
       } catch (error) {
-        console.error("Erro ao salvar produto:", error);
+        console.error("Erro ao guardar produto:", error);
       }
       closeModal();
     };

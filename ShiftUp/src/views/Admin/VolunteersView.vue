@@ -123,7 +123,7 @@ export default {
       modalOpen.value = false;
     };
 
-    // Salvar volunteers (Edit)
+    // guardar volunteers (Edit)
     const saveUser = async (userData) => {
       try {
         if (modalMode.value === "create") {
@@ -134,7 +134,7 @@ export default {
           await usersStore.updateUser(userData);
         }
       } catch (error) {
-        console.error("Erro ao salvar utilizador:", error);
+        console.error("Erro ao guardar utilizador:", error);
       }
       closeModal();
     };

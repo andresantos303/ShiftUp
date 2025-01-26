@@ -106,7 +106,7 @@ export default {
       type: Function,
       required: true,
     },
-    // Função chamada ao salvar ou atualizar o ticket
+    // Função chamada ao guardar ou atualizar o ticket
     onSave: {
       type: Function,
       required: true,

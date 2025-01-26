@@ -109,7 +109,7 @@ export default {
       type: Function,
       required: true,
     },
-    onSave: {      // função chamada ao salvar
+    onSave: {      // função chamada ao guardar
       type: Function,
       required: true,
     },

@@ -136,7 +136,7 @@
             </div>
           </div>
 
-          <!-- Botão Salvar -->
+          <!-- Botão guardar -->
           <Button label="Save Conference" to="#" :bgColor="'bg-custom-gradient'" :textColor="'text-white'"
             additionalClasses="w-full py-3" @click="handleSubmit" />
         </form>

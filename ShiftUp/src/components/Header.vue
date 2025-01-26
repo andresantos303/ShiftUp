@@ -14,7 +14,7 @@
           :to="`/participante/${user.id}/profile`"
           class="hidden md:block text-white text-base px-8 py-3"
         >
-          Dashboard
+          Private Area
         </RouterLink>
         <RouterLink
           v-if="haveTicket && user.role == 'admin'"

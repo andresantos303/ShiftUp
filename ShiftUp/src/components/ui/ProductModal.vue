@@ -126,7 +126,7 @@
         type: Function,
         required: true,
       },
-      // Função chamada ao salvar ou atualizar o produto
+      // Função chamada ao guardar ou atualizar o produto
       onSave: {
         type: Function,
         required: true,

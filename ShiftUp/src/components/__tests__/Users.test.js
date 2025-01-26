@@ -96,7 +96,7 @@ describe('useUsersStore', () => {
     expect(user.name).toBe('Little John');
   });
 
-  it('getVolunteers retorna apenas usuários com a role "voluntary"', () => {
+  it('getVolunteers retorna apenas users com a role "voluntary"', () => {
     const store = useUsersStore();
     const volunteers = store.getVolunteers;
 

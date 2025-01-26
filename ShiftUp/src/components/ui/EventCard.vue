@@ -22,7 +22,11 @@
     <!-- Speakers -->
     <div class="flex items-center mt-4 gap-4 flex-wrap">
       <!-- Iterate over speakers -->
-      <div v-for="(speaker, index) in speakers" :key="index" class="flex items-center">
+      <div
+        v-for="(speaker, index) in speakers"
+        :key="index"
+        class="flex items-center"
+      >
         <img :src="speaker.image" alt="Speaker" class="w-12 h-12 rounded-full" />
         <div class="ml-2">
           <p class="font-medium">{{ speaker.name }}</p>
@@ -31,18 +35,25 @@
       </div>
     </div>
 
+    <!-- Botão de Participar -->
     <div v-if="hasParticipateButton" class="mt-4">
       <slot name="actions">
-        <Button
-          @click="onParticipateClick" label="Participate">
-        </Button>
+        <Button @click="onParticipateClick" label="Participate" />
+      </slot>
+    </div>
+
+    <!-- Botão de Remover da Agenda -->
+    <div v-else-if="hasStopParticipationButton" class="mt-4">
+      <slot name="actions">
+        <Button @click="onStopParticipationClick" label="Remove" />
       </slot>
     </div>
   </div>
 </template>
 
 <script>
-import Button from './button.vue';
+import Button from "./button.vue";
+
 export default {
   components: {
     Button,
@@ -59,12 +70,19 @@ export default {
     },
     hasParticipateButton: {
       type: Boolean,
-      default: false, // Default is false
+      default: false, // Botão de "Participar"
+    },
+    hasStopParticipationButton: {
+      type: Boolean,
+      default: false, // Botão de "Remover" (Stop Participation)
     },
   },
   methods: {
     onParticipateClick() {
-      this.$emit('participate'); // Emit an event to the parent
+      this.$emit("participate");
+    },
+    onStopParticipationClick() {
+      this.$emit("stopParticipation");
     },
   },
 };

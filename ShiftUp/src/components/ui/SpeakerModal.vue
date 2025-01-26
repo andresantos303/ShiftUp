@@ -111,7 +111,7 @@ export default {
       type: Function,
       required: true,
     },
-    // Função chamada ao salvar ou atualizar o speaker
+    // Função chamada ao guardar ou atualizar o speaker
     onSave: {
       type: Function,
       required: true,

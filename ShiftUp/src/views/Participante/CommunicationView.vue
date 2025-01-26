@@ -7,13 +7,13 @@ import { useRoute } from "vue-router";
 
 const notificationsStore = useNotificationsStore();
 
-// Recupera o userRole a partir de um store de usuários e do ID na rota
+// Recupera o userRole a partir de um store de users e do ID na rota
 const usersStore = useUsersStore();
 const route = useRoute();
 const userId = parseInt(route.params.id);
 const currentUser = computed(() => usersStore.getUserById(userId));
 
-// Filtra as notificações de acordo com o role do usuário
+// Filtra as notificações de acordo com o role do user
 const filteredNotifications = computed(() => {
   // Garante que currentUser.value exista
   if (!currentUser.value) return [];

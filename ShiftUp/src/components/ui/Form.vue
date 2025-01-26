@@ -67,7 +67,7 @@
         </div>
       </div>
   
-      <!-- Botão Salvar -->
+      <!-- Botão Guardar -->
       <Button label="Save {{ formTypeLabel }}" to="#" :bgColor="'bg-custom-gradient'" :textColor="'text-white'"
         additionalClasses="w-full py-3" @click.native="submitForm" />
     </form>

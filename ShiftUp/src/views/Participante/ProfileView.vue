@@ -3,6 +3,7 @@ import { useRoute } from "vue-router";
 import HeaderP from "../../components/HeaderP.vue";
 import Button from "../../components/ui/button.vue";
 import { useUsersStore } from "@/stores/users";
+import { useConferencesStore } from "@/stores/conferences";
 import { computed, ref } from "vue";
 
 export default {
@@ -11,28 +12,28 @@ export default {
     Button,
   },
   setup() {
-    const usersStore = useUsersStore();
     const route = useRoute();
     const id = parseInt(route.params.id);
 
-    // Computed para obter o user da store
+    const usersStore = useUsersStore();
+    const conferencesStore = useConferencesStore();
+
+    // Usuário atual
     const user = computed(() => usersStore.getUserById(id));
 
-    // Clonamos os dados do user para edição (incluindo 'photo')
+    // Clonagem para edição de perfil
     const editableUser = ref({
       ...user.value,
       confirmPassword: "",
     });
 
-    // Atualizar perfil
+    // Atualizar Perfil
     const updateProfile = () => {
       if (editableUser.value.password !== editableUser.value.confirmPassword) {
         alert("As senhas não coincidem.");
         return;
       }
-
       usersStore.updateUser(editableUser.value);
-
       alert("Perfil atualizado com sucesso!");
     };
 
@@ -48,21 +49,48 @@ export default {
       }
     };
 
-    // Mock para conquistas (com status para diferenciar)
-    const achievements = ref([
-      { description: "Participou da Maratona Tech 2023", completed: true },
-      { description: "Concluiu o Workshop de Inteligência Artificial", completed: true },
-      { description: "Ganhou o Hackathon de Inovação 2022", completed: true },
-      { description: "", completed: false }, // Conquista ainda não alcançada
-    ]);
+    /**
+     * Conquistas dinâmicas baseadas nas conferências do usuário.
+     * 1) Se o user participa de pelo menos 1 conferência, adicionamos "Participou no evento ShiftUp"
+     * 2) Para cada conferência, inserimos "Participou da {conference.title}"
+     */
+    const dynamicAchievements = computed(() => {
+      if (!user.value) return [];
 
+      const userConfIds = user.value.conferences;
+      if (!userConfIds || userConfIds.length === 0) {
+        // Se o usuário não participa de nenhuma conferência, retorna vazio
+        return [];
+      }
+
+      // Monta o array de conquistas
+      const achievements = [];
+      // Primeira conquista quando existe pelo menos 1 conferência
+      achievements.push({
+        description: "Participou no evento ShiftUp",
+        completed: true,
+      });
+
+      // Para cada conferência do user, cria uma conquista
+      const userConferences = conferencesStore.conferences.filter((c) =>
+        userConfIds.includes(c.id)
+      );
+      userConferences.forEach((conf) => {
+        achievements.push({
+          description: `Participou da ${conf.title}`,
+          completed: true,
+        });
+      });
+
+      return achievements;
+    });
 
     return {
       user,
       editableUser,
       updateProfile,
       handleFileChange,
-      achievements,
+      dynamicAchievements,
     };
   },
 };
@@ -72,6 +100,7 @@ export default {
   <div>
     <HeaderP />
     <div class="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+      <!-- Formulário do Perfil -->
       <form @submit.prevent="updateProfile" class="space-y-6">
         <!-- Foto de Perfil -->
         <div class="flex flex-col items-center space-y-4">
@@ -120,9 +149,10 @@ export default {
             class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" />
         </div>
 
-        <!-- Botão Save Changes -->
+        <!-- Botão "Guardar Alterações" -->
         <div class="text-right">
-          <Button :label="'Salvar Alterações'" :to="'#'" :bgColor="'bg-custom-gradient'" :textColor="'text-white'"
+          <Button :label="'Guardar Alterações'" @click="updateProfile" :to="''" :bgColor="'bg-custom-gradient'"
+            :textColor="'text-white'"
             :additionalClasses="'hover:opacity-90 focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50'" />
         </div>
       </form>
@@ -130,8 +160,9 @@ export default {
       <!-- Conquistas (Linha do Tempo) -->
       <div class="mt-10">
         <h2 class="text-xl font-bold text-gray-800 mb-4">Conquistas</h2>
-        <div class="relative border-l border-gray-300">
-          <div v-for="(achievement, index) in achievements" :key="index" class="mb-6 ml-4">
+
+        <div class="relative border-l border-gray-300" v-if="dynamicAchievements.length > 0">
+          <div v-for="(achievement, index) in dynamicAchievements" :key="index" class="mb-6 ml-4">
             <div :class="[
               'absolute -left-2.5 w-5 h-5 rounded-full border-2',
               achievement.completed ? 'bg-blue-500 border-white' : 'bg-gray-300 border-gray-200',
@@ -140,9 +171,14 @@ export default {
               'mt-1 text-base font-medium',
               achievement.completed ? 'text-gray-700' : 'text-gray-400',
             ]">
-              {{ achievement.description || 'Conquista ainda não desbloqueada' }}
+              {{ achievement.description }}
             </div>
           </div>
+        </div>
+
+        <!-- Caso o usuário não participe de nenhuma conferência -->
+        <div v-else class="mt-2 text-gray-500 text-sm italic">
+          Nenhuma conquista registrada.
         </div>
       </div>
     </div>
