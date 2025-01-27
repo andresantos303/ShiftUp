@@ -30,11 +30,11 @@ export default {
     // Atualizar Perfil
     const updateProfile = () => {
       if (editableUser.value.password !== editableUser.value.confirmPassword) {
-        alert("As senhas não coincidem.");
+        alert("The passwords don't match.");
         return;
       }
       usersStore.updateUser(editableUser.value);
-      alert("Perfil atualizado com sucesso!");
+      alert("Profile updated successfully!");
     };
 
     // Atualizar a foto de perfil
@@ -63,11 +63,10 @@ export default {
         return [];
       }
 
-      // Monta o array de conquistas
       const achievements = [];
       // Primeira conquista quando existe pelo menos 1 conferência
       achievements.push({
-        description: "Participou no evento ShiftUp",
+        description: "Participated in the ShiftUp event",
         completed: true,
       });
 
@@ -77,7 +76,7 @@ export default {
       );
       userConferences.forEach((conf) => {
         achievements.push({
-          description: `Participou da ${conf.title}`,
+          description: `Participated in ${conf.title}`,
           completed: true,
         });
       });
@@ -104,10 +103,10 @@ export default {
       <form @submit.prevent="updateProfile" class="space-y-6">
         <!-- Foto de Perfil -->
         <div class="flex flex-col items-center space-y-4">
-          <img :src="editableUser.photo || '/images/profile-icon.png'" alt="Foto de perfil"
+          <img :src="editableUser.photo || '/images/profile-icon.png'" alt="Profile Picture"
             class="w-24 h-24 rounded-full border-2 border-gray-300" />
           <label for="profilePictureInput" class="cursor-pointer text-sm font-medium text-blue-600 hover:underline">
-            Alterar foto de perfil
+            Change profile picture
           </label>
           <input type="file" id="profilePictureInput" @change="handleFileChange" accept="image/*" class="hidden" />
         </div>
@@ -115,9 +114,9 @@ export default {
         <!-- Nome -->
         <div>
           <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-            Nome
+            Name
           </label>
-          <input v-model="editableUser.name" type="text" id="name" placeholder="Digite seu nome"
+          <input v-model="editableUser.name" type="text" id="name" placeholder="Enter your name"
             class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" />
         </div>
 
@@ -126,14 +125,14 @@ export default {
           <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
             Email
           </label>
-          <input v-model="editableUser.email" type="email" id="email" placeholder="Digite seu email"
+          <input v-model="editableUser.email" type="email" id="email" placeholder="Enter your email"
             class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" />
         </div>
 
         <!-- Nova Senha -->
         <div>
           <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-            Nova Senha
+            New password
           </label>
           <input v-model="editableUser.password" type="password" id="password" placeholder="Digite sua nova senha"
             class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" />
@@ -142,7 +141,7 @@ export default {
         <!-- Confirmar Senha -->
         <div>
           <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">
-            Confirmar Senha
+            Confirm password
           </label>
           <input v-model="editableUser.confirmPassword" type="password" id="confirmPassword"
             placeholder="Confirme sua nova senha"
@@ -159,7 +158,7 @@ export default {
 
       <!-- Conquistas (Linha do Tempo) -->
       <div class="mt-10">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">Conquistas</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Achievements</h2>
 
         <div class="relative border-l border-gray-300" v-if="dynamicAchievements.length > 0">
           <div v-for="(achievement, index) in dynamicAchievements" :key="index" class="mb-6 ml-4">
@@ -178,7 +177,7 @@ export default {
 
         <!-- Caso o usuário não participe de nenhuma conferência -->
         <div v-else class="mt-2 text-gray-500 text-sm italic">
-          Nenhuma conquista registrada.
+          No achievements recorded.
         </div>
       </div>
     </div>
