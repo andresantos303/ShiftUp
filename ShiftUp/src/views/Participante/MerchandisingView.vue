@@ -103,7 +103,7 @@ export default {
 
           <!-- Logo Grande -->
           <div class="flex justify-center">
-            <img src="/public/images/logoIcon.png" alt="" class="w-32 opacity-75" />
+            <img src="/public/images/logoC.png" alt="" class="w-32 opacity-75" />
           </div>
         </div>
 
