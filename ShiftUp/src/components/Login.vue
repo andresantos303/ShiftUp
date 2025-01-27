@@ -4,7 +4,9 @@
     <div class="w-full md:w-1/2 flex mt-12 md:mt-0 flex-col justify-center items-center px-6 md:px-12">
       <div class="max-w-xl mx-auto">
         <!-- Logo -->
-        <img src="/public/images/logoGradient.png" alt="Logo" class="mb-6 w-32" />
+        <router-link to="/">
+          <img src="/public/images/logoGradient.png" alt="Logo" class="mb-6 w-32" />
+        </router-link>
 
         <!-- Título -->
         <h1 class="text-3xl md:text-4xl font-bold mb-2">Log in</h1>

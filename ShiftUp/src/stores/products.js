@@ -14,7 +14,7 @@ export const useProductsStore = defineStore("products", {
         image: '/public/images/blueTshirt.png',
       },
       {
-        id: 1,
+        id: 2,
         name: "Tshirt Shift Up - White",
         price: 25,
         description:
@@ -24,7 +24,7 @@ export const useProductsStore = defineStore("products", {
         image: '/public/images/whiteTshirt.png',
       },
       {
-        id: 1,
+        id: 3,
         name: "Hoodie Shift Up - Blue",
         price: 50,
         description:
@@ -34,7 +34,7 @@ export const useProductsStore = defineStore("products", {
         image: '/public/images/blueHoodie.png',
       },
       {
-        id: 1,
+        id: 4,
         name: "Hoodie Shift Up - White",
         price: 50,
         description:
@@ -44,24 +44,34 @@ export const useProductsStore = defineStore("products", {
         image: '/public/images/whiteHoodie.png',
       },
       {
-        id: 1,
+        id: 5,
         name: "Notebook Shift Up",
         price: 10,
         description:
           "A high-quality notebook featuring the Shift Up logo. Perfect for event attendees and fans to wear and showcase their support.",
-        category: "acessorios",
+        category: "accessories",
         purchased: 0,
         image: '/public/images/notebook.png',
       },
       {
-        id: 1,
+        id: 6,
         name: "Pin Shift Up",
         price: 5,
         description:
           "A high-quality pin featuring the Shift Up logo. Perfect for event attendees and fans to wear and showcase their support.",
-        category: "acessorios",
+        category: "accessories",
         purchased: 0,
         image: '/public/images/pin.png',
+      },
+      {
+        id: 7,
+        name: "Personalized Badge",
+        price: 20,
+        description:
+          "A high-quality pin featuring the Shift Up logo. Perfect for event attendees and fans to wear and showcase their support.",
+        category: "badge",
+        purchased: 0,
+        image: '/public/images/cracha.png',
       },
     ],
   }),

@@ -106,12 +106,6 @@ const router = createRouter({
     },
     //Participante Routes
     {
-      path: '/participante/:id',
-      name: 'participante',
-      meta: { requiresAuth: true },
-      component: () => import('../views/Participante/ParticipanteView.vue'),
-    },
-    {
       path: '/participante/:id/profile',
       name: 'profile',
       meta: { requiresAuth: true },

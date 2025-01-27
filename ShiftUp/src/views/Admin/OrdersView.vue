@@ -10,7 +10,7 @@
             <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 20 20">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" /> 
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
             </svg>
           </div>
           <input v-model="searchQuery" type="text" id="table-search-orders"
@@ -28,7 +28,7 @@
 import HeaderA from "@/components/HeaderA.vue";
 import BaseTable from "@/components/ui/baseTable.vue";
 import { useOrdersStore } from "@/stores/orders";
-import { useUsersStore } from "@/stores/users";     
+import { useUsersStore } from "@/stores/users";
 import { useProductsStore } from "@/stores/products";
 import { computed, ref } from "vue";
 
@@ -42,7 +42,7 @@ export default {
 
     // Stores
     const ordersStore = useOrdersStore();
-    const usersStore = useUsersStore();        
+    const usersStore = useUsersStore();
     const productsStore = useProductsStore();
 
     const searchQuery = ref("");

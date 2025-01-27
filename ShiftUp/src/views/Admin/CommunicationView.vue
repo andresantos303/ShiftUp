@@ -48,7 +48,6 @@
         </form>
 
         <!-- Tabela de Notificações Enviadas -->
-        <!-- Tabela de Notificações Enviadas -->
         <div class="mt-8">
           <h3 class="text-xl font-bold mb-4">Notifications Sent</h3>
           <table class="table-auto w-full border border-gray-300">
@@ -77,7 +76,8 @@
                 </td>
                 <!-- Botão de Remoção -->
                 <td class="px-4 py-2 text-sm text-gray-800">
-                  <button class="bg-red-600 text-white rounded px-2 py-1 hover:bg-red-700" @click="removeNotification(notification.id)">
+                  <button class="bg-red-600 text-white rounded px-2 py-1 hover:bg-red-700"
+                    @click="removeNotification(notification.id)">
                     Delete
                   </button>
                 </td>

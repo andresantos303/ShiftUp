@@ -24,7 +24,6 @@ import { useOrdersStore } from "@/stores/orders";
 import { useConferencesStore } from "@/stores/conferences";
 import { useTicketsStore } from "@/stores/tickets";
 
-// Instancia as stores
 const usersStore = useUsersStore();
 const productsStore = useProductsStore();
 const ordersStore = useOrdersStore();
@@ -33,7 +32,7 @@ const ticketsStore = useTicketsStore();
 
 const speakersStore = useSpeakersStore();
 try {
-  speakersStore.fetchTodos(); // Chama a ação fetchTodos() para obter os dados
+  speakersStore.fetchTodos();
 } catch (error) {
   console.error("Error fetching speakers:", error.message);
 }
@@ -91,12 +90,14 @@ const stats = computed(() => [
 .card-value {
   font-size: 1.6rem;
   font-weight: bold;
-  color: #1f2937; /* Cinzento escuro */
+  color: #1f2937;
+  /* Cinzento escuro */
   margin-bottom: 0.5rem;
 }
 
 .card-label {
   font-size: 0.9rem;
-  color: #4b5563; /* Cinzento */
+  color: #4b5563;
+  /* Cinzento */
 }
 </style>

@@ -69,7 +69,8 @@
 
           <!-- Submit Button -->
           <div>
-            <Button :label="'Submit Application'" :to="''" @click="submitForm" :bgColor="'bg-custom-gradient'" :textColor="'text-white'"
+            <Button :label="'Submit Application'" :to="''" @click="submitForm" :bgColor="'bg-custom-gradient'"
+              :textColor="'text-white'"
               :additionalClasses="'w-full font-medium py-3 hover:opacity-90 focus:ring-2 focus:ring-custom-gradient-start focus:ring-opacity-50'" />
           </div>
         </form>
